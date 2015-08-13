@@ -33,6 +33,10 @@ public class LevelUpActivity extends Activity {
     private int end;
     private int stPoints;
     Intent stIntent;
+    private int strCount=0;
+    private int aglCount=0;
+    private int intelCount=0;
+    private int endCount=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +74,7 @@ public class LevelUpActivity extends Activity {
             public void onClick(View v) {
                 if (stPoints > 0) {
                     str++;
+                    strCount++;
                     stPoints--;
                     etStr.setText(String.valueOf(str));
                     tvStPoints.setText(String.valueOf(stPoints));
@@ -79,8 +84,9 @@ public class LevelUpActivity extends Activity {
         btnStrSub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if ((str > 0) && (str>0)) {
+                if ((str > 0)&&(strCount>0)) {
                     str--;
+                    strCount--;
                     stPoints++;
                     etStr.setText(String.valueOf(str));
                     tvStPoints.setText(String.valueOf(stPoints));
@@ -92,6 +98,7 @@ public class LevelUpActivity extends Activity {
             public void onClick(View v) {
                 if (stPoints > 0) {
                     agl++;
+                    aglCount++;
                     stPoints--;
                     etAgl.setText(String.valueOf(agl));
                     tvStPoints.setText(String.valueOf(stPoints));
@@ -101,8 +108,9 @@ public class LevelUpActivity extends Activity {
         btnAglSub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if ((agl > 0)&& (agl>0)){
+                if ((agl > 0)&&(aglCount>0)){
                     agl--;
+                    aglCount--;
                     stPoints++;
                     etAgl.setText(String.valueOf(agl));
                     tvStPoints.setText(String.valueOf(stPoints));
@@ -114,6 +122,7 @@ public class LevelUpActivity extends Activity {
             public void onClick(View v) {
                 if (stPoints > 0) {
                     intel++;
+                    intelCount++;
                     stPoints--;
                     etInt.setText(String.valueOf(intel));
                     tvStPoints.setText(String.valueOf(stPoints));
@@ -123,8 +132,9 @@ public class LevelUpActivity extends Activity {
         btnIntSub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if ((intel > 0)&& (intel>0)){
+                if ((intel > 0)&&(intelCount>0)){
                     intel--;
+                    intelCount--;
                     stPoints++;
                     etInt.setText(String.valueOf(intel));
                     tvStPoints.setText(String.valueOf(stPoints));
@@ -136,6 +146,7 @@ public class LevelUpActivity extends Activity {
             public void onClick(View v) {
                 if (stPoints > 0) {
                     end++;
+                    endCount++;
                     stPoints--;
                     etEnd.setText(String.valueOf(end));
                     tvStPoints.setText(String.valueOf(stPoints));
@@ -145,8 +156,9 @@ public class LevelUpActivity extends Activity {
         btnEndSub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if ((end > 0)&& (end>0)){
+                if ((end > 0)&&(endCount>0)){
                     end--;
+                    endCount--;
                     stPoints++;
                     etEnd.setText(String.valueOf(end));
                     tvStPoints.setText(String.valueOf(stPoints));
