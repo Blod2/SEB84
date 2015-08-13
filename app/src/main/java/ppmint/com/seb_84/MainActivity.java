@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,7 +38,7 @@ public class MainActivity extends Activity {
     ProgressBar pbExp;
     Button btnTrn;
     Button btnBtl;
-    Hero hero;
+    public Hero hero;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,7 +96,13 @@ public class MainActivity extends Activity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.lvlUp) {
-            return true;
+            Intent intent = new Intent(this, LevelUpActivity.class);
+            intent.putExtra("str", hero.strength);
+            intent.putExtra("agl", hero.agility);
+            intent.putExtra("int", hero.intellect);
+            intent.putExtra("end", hero.endurance);
+            intent.putExtra("points", hero.statPoints);
+            startActivityForResult(intent, 1);
         }
 
         return super.onOptionsItemSelected(item);
@@ -109,6 +117,16 @@ public class MainActivity extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (data == null) {return;}
+        hero.strength = data.getIntExtra("str",0);
+        hero.agility = data.getIntExtra("agl",0);
+        hero.intellect = data.getIntExtra("int",0);
+        hero.endurance = data.getIntExtra("end",0);
+        hero.statPoints = data.getIntExtra("points",0);
+        updateScreen();
     }
 
     public void updateScreen(){

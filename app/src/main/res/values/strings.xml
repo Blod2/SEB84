@@ -20,6 +20,18 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="toast_noname">Incorrect name!</string>
 
+    <!-- LevelUP Screen -->
+    <string name="stStr">STRENGTH</string>
+    <string name="stAgl">AGILITY</string>
+    <string name="stInt">INTELLECT</string>
+    <string name="stEnd">ENDURANCE</string>
+    <string name="confirm">CONFIRM</string>
+    <string name="cancel">CANCEL</string>
+    <string name="add">+</string>
+    <string name="sub">-</string>
+
+    <string name="action_settings">Settings</string>
+
     <!-- HeroScreen -->
     <string name="hp">HP</string>
     <string name="exp">Exp</string>
@@ -36,5 +48,6 @@
     <string name="training">Training</string>
     <string name="toBattle">To Battle</string>
     <string name="lvlUp">Level UP</string>
+    <string name="title_activity_level_up">LevelUpActivity</string>
 
 </resources>
