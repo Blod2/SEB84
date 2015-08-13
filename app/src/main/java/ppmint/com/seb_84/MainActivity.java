@@ -130,6 +130,7 @@ public class MainActivity extends Activity {
     }
 
     public void updateScreen(){
+        hero.refreshHero();
         tvName.setText(hero.name);
         tvLvl.setText("Level: " + String.valueOf(hero.lvl));
         tvStr.setText(String.valueOf(hero.strength));

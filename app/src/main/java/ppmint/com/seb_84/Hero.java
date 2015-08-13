@@ -30,7 +30,7 @@ public class Hero {
     public Hero(SharedPreferences sp,String hname,Context ccc){
         sharedPref = sp;
         context = ccc;
-        name = sharedPref.getString(context.getString(R.string.preference_hero_name_key),hname);
+        name = sharedPref.getString(context.getString(R.string.preference_hero_name_key), hname);
         lvl = sharedPref.getInt(context.getString(R.string.preference_hero_lvl_key), 1);
         hp = sharedPref.getInt(context.getString(R.string.preference_hero_HP_key), 10);
         exp = sharedPref.getInt(context.getString(R.string.preference_hero_Exp_key), 0);
@@ -40,10 +40,10 @@ public class Hero {
         endurance = sharedPref.getInt(context.getString(R.string.preference_hero_End_key),1);
         statPoints = sharedPref.getInt(context.getString(R.string.preference_hero_stPt_key),3);
         attack = strength;
-        ch = agility / 10;
-        accuracy = agility / 20 + intellect / 10;
+        ch = (float)agility / 10;
+        accuracy = (float)agility / 20 + (float)intellect / 10;
         defence = endurance;
-        dodge = agility / 10 + intellect / 20;
+        dodge = (float)agility / 10 + (float)intellect / 20;
         maxHP = strength * 5 + endurance * 5;
         maxExp = lvl * 15;
     }
@@ -60,5 +60,16 @@ public class Hero {
         editor.putInt(context.getString(R.string.preference_hero_stPt_key),statPoints);
         editor.putInt(context.getString(R.string.preference_hero_Exp_key), exp);
         editor.commit();
+    }
+
+    public void refreshHero(){
+        //refreshing only countable stats
+        attack = strength;
+        ch = (float)agility / 10;
+        accuracy = (float)agility / 20 + (float)intellect / 10;
+        defence = endurance;
+        dodge = (float)agility / 10 + (float)intellect / 20;
+        maxHP = strength * 5 + endurance * 5;
+        maxExp = lvl * 15;
     }
 }
