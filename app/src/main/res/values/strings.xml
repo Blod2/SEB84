@@ -11,6 +11,7 @@
     <string name="preference_hero_Agl_key">heroAgl</string>
     <string name="preference_hero_Int_key">heroInt</string>
     <string name="preference_hero_End_key">heroEnd</string>
+    <string name="preference_hero_stPt_key">heroStPt</string>
 
     <!-- StartScreen -->
     <string name="tvLogo_text">SEB-84</string>

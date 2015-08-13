@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 /**
- * Created by Dima on 12.08.2015.
+ * Created by Таня on 12.08.2015.
  */
 public class Hero {
 
@@ -23,6 +23,7 @@ public class Hero {
     public float accuracy;
     public int defence;
     public float dodge;
+    public int statPoints;
     SharedPreferences sharedPref;
     Context context;
 
@@ -37,13 +38,14 @@ public class Hero {
         agility = sharedPref.getInt(context.getString(R.string.preference_hero_Agl_key), 1);
         intellect = sharedPref.getInt(context.getString(R.string.preference_hero_Int_key), 1);
         endurance = sharedPref.getInt(context.getString(R.string.preference_hero_End_key),1);
+        statPoints = sharedPref.getInt(context.getString(R.string.preference_hero_stPt_key),3);
         attack = strength;
         ch = agility / 10;
         accuracy = agility / 20 + intellect / 10;
         defence = endurance;
         dodge = agility / 10 + intellect / 20;
         maxHP = strength * 5 + endurance * 5;
-        maxExp = lvl * 10;
+        maxExp = lvl * 15;
     }
 
     public void saveHero(){
@@ -55,6 +57,7 @@ public class Hero {
         editor.putInt(context.getString(R.string.preference_hero_Int_key), intellect);
         editor.putInt(context.getString(R.string.preference_hero_End_key), endurance);
         editor.putInt(context.getString(R.string.preference_hero_HP_key), hp);
+        editor.putInt(context.getString(R.string.preference_hero_stPt_key),statPoints);
         editor.putInt(context.getString(R.string.preference_hero_Exp_key), exp);
         editor.commit();
     }
