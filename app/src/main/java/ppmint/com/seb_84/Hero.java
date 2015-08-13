@@ -24,6 +24,8 @@ public class Hero {
     public int defence;
     public float dodge;
     public int statPoints;
+    public int HPRegeneration;
+
     SharedPreferences sharedPref;
     Context context;
 

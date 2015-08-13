@@ -16,6 +16,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 public class MainActivity extends Activity {
 
@@ -39,6 +42,9 @@ public class MainActivity extends Activity {
     Button btnTrn;
     Button btnBtl;
     public Hero hero;
+    Timer timer;
+    TimerTask hpRegeneration;
+    Handler mHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +66,7 @@ public class MainActivity extends Activity {
         pbExp = (ProgressBar) findViewById(R.id.pbExp);
         btnTrn = (Button) findViewById(R.id.btnTrn);
         btnBtl = (Button) findViewById(R.id.btnBtl);
+
         sharedPref = getSharedPreferences(getString(R.string.preference_file_key_name), Context.MODE_PRIVATE);
         if (sharedPref.contains(getString(R.string.preference_hero_name_key))){
             hero = new Hero(sharedPref,"sasiska",this);
@@ -73,11 +80,31 @@ public class MainActivity extends Activity {
         btnTrn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                hero.exp += 10;
+                hero.exp += 30;
                 lvlUp();
                 updateScreen();
             }
         });
+        timer = new Timer(true);
+        hpRegeneration = new TimerTask() {
+            @Override
+            public void run() {
+                if(hero.hp >= hero.maxHP){
+                    hero.hp = hero.maxHP;
+                    timer.cancel();
+                }
+                else
+                    hero.hp += hero.endurance;
+                mHandler.sendEmptyMessage(1);
+            }
+        };
+        timer.schedule(hpRegeneration,200,60000);
+        mHandler = new Handler(){
+            @Override
+            public void handleMessage(Message message){
+                if (message.what==1) updateScreen();
+            }
+        };
     }
 
     @Override
