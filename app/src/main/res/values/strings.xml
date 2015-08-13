@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">SEB-84</string>
+
+    <!-- Preferences -->
+    <string name="preference_file_key_name">ppmint.com.seb_84.preference</string>
+    <string name="preference_hero_name_key">heroName</string>
+    <string name="preference_hero_lvl_key">heroLvl</string>
+    <string name="preference_hero_HP_key">heroHP</string>
+    <string name="preference_hero_Exp_key">heroExp</string>
+    <string name="preference_hero_str_key">heroStr</string>
+    <string name="preference_hero_Agl_key">heroAgl</string>
+    <string name="preference_hero_Int_key">heroInt</string>
+    <string name="preference_hero_End_key">heroEnd</string>
+
+    <!-- StartScreen -->
+    <string name="tvLogo_text">SEB-84</string>
+    <string name="tvHero_name">Enter new hero\'s name:</string>
+    <string name="btnSet_name">Let\'s ROCK!!!!!</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="toast_noname">Incorrect name!</string>
+
+    <!-- HeroScreen -->
+    <string name="hp">HP</string>
+    <string name="exp">Exp</string>
+    <string name="stats">Stats:</string>
+    <string name="strength">Strength:</string>
+    <string name="agility">Agility:</string>
+    <string name="intellect">Intellect:</string>
+    <string name="endurance">Endurance:</string>
+    <string name="attack">Attack:</string>
+    <string name="defense">Defense:</string>
+    <string name="dodge">Dodge:</string>
+    <string name="crit.hit">Crit.hit:</string>
+    <string name="accuracy">Accuracy:</string>
+    <string name="training">Training</string>
+    <string name="toBattle">To Battle</string>
+    <string name="action_settings">Settings</string>
+
+
+</resources>
