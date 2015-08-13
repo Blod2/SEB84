@@ -5,14 +5,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class MainActivity extends Activity {
+
+    public String LOG_TAG = "MainScreen";
 
     SharedPreferences sharedPref;
     TextView tvName;
@@ -26,6 +31,7 @@ public class MainActivity extends Activity {
     TextView tvAccur;
     TextView tvDef;
     TextView tvDd;
+    TextView tvStPoints;
     ProgressBar pbHP;
     ProgressBar pbExp;
     Button btnTrn;
@@ -47,6 +53,7 @@ public class MainActivity extends Activity {
         tvAccur = (TextView) findViewById(R.id.tvAccur);
         tvDef = (TextView) findViewById(R.id.tvDef);
         tvDd = (TextView) findViewById(R.id.tvDd);
+        tvStPoints = (TextView) findViewById(R.id.tvStPoints);
         pbHP = (ProgressBar) findViewById(R.id.pbHP);
         pbExp = (ProgressBar) findViewById(R.id.pbExp);
         btnTrn = (Button) findViewById(R.id.btnTrn);
@@ -61,6 +68,14 @@ public class MainActivity extends Activity {
             hero = new Hero(sharedPref,nameHero,this);
             updateScreen();
         }
+        btnTrn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hero.exp += 10;
+                lvlUp();
+                updateScreen();
+            }
+        });
     }
 
     @Override
@@ -78,7 +93,7 @@ public class MainActivity extends Activity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.lvlUp) {
             return true;
         }
 
@@ -112,5 +127,17 @@ public class MainActivity extends Activity {
         pbExp.setMax(hero.maxExp);
         pbHP.setProgress(hero.hp);
         pbExp.setProgress(hero.exp);
+        if (hero.statPoints > 0) tvStPoints.setText("+" + String.valueOf(hero.statPoints));
+        else tvStPoints.setText("");
+    }
+
+    public void lvlUp(){
+        if (hero.exp >= hero.maxExp){
+            hero.exp -= hero.maxExp;
+            hero.lvl++;
+            hero.statPoints += 3;
+            hero.maxExp = hero.lvl * 15;
+            Toast.makeText(getApplicationContext(),"Level UP!!!",Toast.LENGTH_SHORT).show();
+        }
     }
 }
