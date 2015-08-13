@@ -43,7 +43,7 @@ public class Hero {
         defence = endurance;
         dodge = agility / 10 + intellect / 20;
         maxHP = strength * 5 + endurance * 5;
-        maxExp = lvl * 15;
+        maxExp = lvl * 10;
     }
 
     public void saveHero(){
