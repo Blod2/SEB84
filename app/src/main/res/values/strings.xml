@@ -12,6 +12,7 @@
     <string name="preference_hero_Int_key">heroInt</string>
     <string name="preference_hero_End_key">heroEnd</string>
     <string name="preference_hero_stPt_key">heroStPt</string>
+    <string name="preference_exit_time">exitTime</string>
 
     <!-- StartScreen -->
     <string name="tvLogo_text">SEB-84</string>
@@ -49,5 +50,13 @@
     <string name="toBattle">To Battle</string>
     <string name="lvlUp">Level UP</string>
     <string name="title_activity_level_up">LevelUpActivity</string>
+    <string name="title_activity_training">TrainingActivity</string>
 
+    <!-- Training -->
+    <string name="train">Choose the type of training:</string>
+    <string name="train30">Break beton blocks with his hands(30min)</string>
+    <string name="train60">Spin backflips(60min)</string>
+    <string name="train120">Kill the dragon(120min)</string>
+    <string name="train240">Go through the queue in the clinic(240min)</string>
+    <string name="trainMain">Training...</string>
 </resources>

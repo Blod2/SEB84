@@ -174,7 +174,7 @@ public class LevelUpActivity extends Activity {
                 stIntent.putExtra("int",intel);
                 stIntent.putExtra("end",end);
                 stIntent.putExtra("points",stPoints);
-                setResult(RESULT_OK, stIntent);
+                setResult(1, stIntent);
                 finish();
             }
         });

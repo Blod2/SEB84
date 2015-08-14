@@ -29,7 +29,13 @@
         </activity>
         <activity
             android:name=".LevelUpActivity"
-            android:label="@string/title_activity_level_up" >
+            android:label="@string/title_activity_level_up"
+            android:screenOrientation="landscape" >
+        </activity>
+        <activity
+            android:name=".TrainingActivity"
+            android:label="@string/title_activity_training"
+            android:screenOrientation="landscape" >
         </activity>
     </application>
 

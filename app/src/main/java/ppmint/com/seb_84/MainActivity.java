@@ -16,6 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -37,14 +38,20 @@ public class MainActivity extends Activity {
     TextView tvDef;
     TextView tvDd;
     TextView tvStPoints;
+    TextView tvTrn;
     ProgressBar pbHP;
     ProgressBar pbExp;
+    ProgressBar pbTrain;
     Button btnTrn;
     Button btnBtl;
     public Hero hero;
     Timer timer;
     TimerTask hpRegeneration;
     Handler mHandler;
+    int timeTrain;
+    Timer trnTimer;
+    TimerTask trainTask;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +73,9 @@ public class MainActivity extends Activity {
         pbExp = (ProgressBar) findViewById(R.id.pbExp);
         btnTrn = (Button) findViewById(R.id.btnTrn);
         btnBtl = (Button) findViewById(R.id.btnBtl);
+        pbTrain = (ProgressBar) findViewById(R.id.pbTrn);
+        tvTrn = (TextView) findViewById(R.id.tvTrn);
+
 
         sharedPref = getSharedPreferences(getString(R.string.preference_file_key_name), Context.MODE_PRIVATE);
         if (sharedPref.contains(getString(R.string.preference_hero_name_key))){
@@ -80,7 +90,9 @@ public class MainActivity extends Activity {
         btnTrn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                hero.exp += 30;
+                Intent intent = new Intent(getApplicationContext(), TrainingActivity.class);
+                intent.putExtra("lvl", hero.lvl);
+                startActivityForResult(intent, 1);
                 lvlUp();
                 updateScreen();
             }
@@ -95,16 +107,47 @@ public class MainActivity extends Activity {
                 }
                 else
                     hero.hp += hero.endurance;
-                mHandler.sendEmptyMessage(1);
+                mHandler.sendEmptyMessage(0);
             }
         };
         timer.schedule(hpRegeneration,200,60000);
         mHandler = new Handler(){
             @Override
             public void handleMessage(Message message){
-                if (message.what==1) updateScreen();
+                switch(message.what){
+                    case 1: hero.exp += hero.lvl;
+                        pbTrain.setVisibility(View.GONE);
+                        tvTrn.setVisibility(View.GONE);
+                        btnTrn.setClickable(true);
+                        break;
+                    case 2: hero.exp += hero.lvl*2;
+                        pbTrain.setVisibility(View.GONE);
+                        tvTrn.setVisibility(View.GONE);
+                        btnTrn.setClickable(true);
+                        break;
+                    case 3: hero.exp += hero.lvl*3;
+                        pbTrain.setVisibility(View.GONE);
+                        tvTrn.setVisibility(View.GONE);
+                        btnTrn.setClickable(true);
+                        break;
+                    case 4: hero.exp += hero.lvl*4;
+                        pbTrain.setVisibility(View.GONE);
+                        tvTrn.setVisibility(View.GONE);
+                        btnTrn.setClickable(true);
+                        break;
+                    default: break;
+                }
+                updateScreen();
             }
         };
+        calculateRegenHP(hero.time);
+    }
+
+    public void calculateRegenHP(long time){
+        //TODO: check counts
+        if (hero.hp<hero.maxHP) hero.hp += (time/60000)*hero.endurance;
+        Log.d(LOG_TAG, "Hp regened: " + (time / 60000) * hero.endurance);
+        if (hero.hp>=hero.maxHP) hero.hp = hero.maxHP;
     }
 
     @Override
@@ -147,12 +190,44 @@ public class MainActivity extends Activity {
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (data == null) {return;}
-        hero.strength = data.getIntExtra("str",0);
-        hero.agility = data.getIntExtra("agl",0);
-        hero.intellect = data.getIntExtra("int",0);
-        hero.endurance = data.getIntExtra("end",0);
-        hero.statPoints = data.getIntExtra("points",0);
+        if (data == null) return;
+        else if (resultCode == 1){
+            hero.strength = data.getIntExtra("str",0);
+            hero.agility = data.getIntExtra("agl",0);
+            hero.intellect = data.getIntExtra("int",0);
+            hero.endurance = data.getIntExtra("end",0);
+            hero.statPoints = data.getIntExtra("points",0);}
+        else if (resultCode == 2){
+            //todo time training
+            pbTrain.setVisibility(View.VISIBLE);
+            tvTrn.setVisibility(View.VISIBLE);
+            btnTrn.setClickable(false);
+            timeTrain = data.getIntExtra("timeTrain",0);
+            final int mode = data.getIntExtra("modeTrain",0);
+            Log.d(LOG_TAG, "TIME: " + timeTrain);
+            if (timeTrain!=0) {
+                pbTrain.setMax(timeTrain);
+                trnTimer = new Timer(false);
+                trainTask = new TimerTask() {
+                    int i = 0;
+
+                    @Override
+                    public void run() {
+                        if (timeTrain != 0) {
+                            pbTrain.setProgress(i);
+                            Log.d(LOG_TAG, "Progress: " + i);
+                            i++;
+                            timeTrain--;
+                            mHandler.sendEmptyMessage(0);
+                        } else {
+                            mHandler.sendEmptyMessage(mode);
+                            trnTimer.cancel();
+                        }
+                    }
+                };
+                trnTimer.schedule(trainTask, 200, 60000);
+            }
+        }
         updateScreen();
     }
 
@@ -186,4 +261,6 @@ public class MainActivity extends Activity {
             Toast.makeText(getApplicationContext(),"Level UP!!!",Toast.LENGTH_SHORT).show();
         }
     }
+
+
 }

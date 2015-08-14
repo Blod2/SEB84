@@ -354,4 +354,31 @@
         android:layout_marginLeft="5dp"
         android:textColor="#ffffffff" />
 
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/pbTrn"
+        android:layout_below="@+id/textView11"
+        android:layout_toRightOf="@+id/textView6"
+        android:layout_alignRight="@+id/tvDd"
+        android:layout_alignEnd="@+id/tvDd"
+        android:layout_marginTop="5dp"
+        android:indeterminate="false"
+        android:visibility="gone" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/trainMain"
+        android:id="@+id/tvTrn"
+        android:layout_alignBottom="@+id/pbTrn"
+        android:layout_alignLeft="@+id/textView6"
+        android:layout_alignStart="@+id/textView6"
+        android:textColor="#ffffffff"
+        android:layout_marginTop="5dp"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
 </RelativeLayout>

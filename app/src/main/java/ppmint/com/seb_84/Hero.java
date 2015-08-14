@@ -3,6 +3,8 @@ package ppmint.com.seb_84;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import static java.lang.System.currentTimeMillis;
+
 /**
  * Created by Таня on 12.08.2015.
  */
@@ -24,7 +26,7 @@ public class Hero {
     public int defence;
     public float dodge;
     public int statPoints;
-    public int HPRegeneration;
+    public long time;
 
     SharedPreferences sharedPref;
     Context context;
@@ -41,6 +43,7 @@ public class Hero {
         intellect = sharedPref.getInt(context.getString(R.string.preference_hero_Int_key), 1);
         endurance = sharedPref.getInt(context.getString(R.string.preference_hero_End_key),1);
         statPoints = sharedPref.getInt(context.getString(R.string.preference_hero_stPt_key),3);
+        time = currentTimeMillis() - sharedPref.getLong(context.getString(R.string.preference_exit_time),currentTimeMillis());
         attack = strength;
         ch = (float)agility / 10;
         accuracy = (float)agility / 20 + (float)intellect / 10;
@@ -61,6 +64,7 @@ public class Hero {
         editor.putInt(context.getString(R.string.preference_hero_HP_key), hp);
         editor.putInt(context.getString(R.string.preference_hero_stPt_key),statPoints);
         editor.putInt(context.getString(R.string.preference_hero_Exp_key), exp);
+        editor.putLong(context.getString(R.string.preference_exit_time),currentTimeMillis());
         editor.commit();
     }
 
