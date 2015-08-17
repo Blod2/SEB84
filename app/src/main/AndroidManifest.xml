@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ppmint.com.seb_84" >
 
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -36,6 +39,10 @@
             android:name=".TrainingActivity"
             android:label="@string/title_activity_training"
             android:screenOrientation="landscape" >
+        </activity>
+        <activity
+            android:name=".BTConnect"
+            android:label="@string/title_activity_btconnect" >
         </activity>
     </application>
 

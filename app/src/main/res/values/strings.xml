@@ -60,5 +60,11 @@
     <string name="train60">Spin backflips(60min)</string>
     <string name="train120">Kill the dragon(120min)</string>
     <string name="train240">Go through the queue in the clinic(240min)</string>
-    <string name="trainMain">Training...</string>
+    <string name="trainMain">Training…</string>
+    <string name="title_activity_btconnect">BTConnect</string>
+
+    <!-- BTConnect -->
+    <string name="get_paired_devices">Get paired devices</string>
+    <string name="search_bt">Search</string>
+    <string name="action_visible">Make me visible</string>
 </resources>

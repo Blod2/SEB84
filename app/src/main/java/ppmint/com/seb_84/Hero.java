@@ -5,9 +5,7 @@ import android.content.SharedPreferences;
 
 import static java.lang.System.currentTimeMillis;
 
-/**
- * Created by Таня on 12.08.2015.
- */
+
 public class Hero {
 
     public String name;

@@ -91,8 +91,14 @@ public class MainActivity extends Activity {
                 Intent intent = new Intent(getApplicationContext(), TrainingActivity.class);
                 intent.putExtra("lvl", hero.lvl);
                 startActivityForResult(intent, 1);
-                lvlUp();
                 updateScreen();
+            }
+        });
+        btnBtl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent in = new Intent(getApplicationContext(),BTConnect.class);
+                startActivityForResult(in,2);
             }
         });
         regenTimer = new Timer(true);
@@ -228,6 +234,11 @@ public class MainActivity extends Activity {
                 trnTimer.schedule(new TrainTask(), 200, 60000);
             }
         }
+        if (requestCode==2){
+            String device = data.getStringExtra("device_address");
+            //TODO: battle activity and bluetoothManager
+            Toast.makeText(getApplicationContext(),device,Toast.LENGTH_SHORT).show();
+        }
         updateScreen();
     }
 
@@ -249,6 +260,7 @@ public class MainActivity extends Activity {
         pbExp.setMax(hero.maxExp);
         pbHP.setProgress(hero.hp);
         pbExp.setProgress(hero.exp);
+        lvlUp();
         if (hero.statPoints > 0) tvStPoints.setText("+" + String.valueOf(hero.statPoints));
         else tvStPoints.setText("");
     }
