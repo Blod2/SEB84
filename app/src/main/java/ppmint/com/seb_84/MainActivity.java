@@ -45,12 +45,10 @@ public class MainActivity extends Activity {
     Button btnTrn;
     Button btnBtl;
     public Hero hero;
-    Timer timer;
+    Timer regenTimer;
     TimerTask hpRegeneration;
     Handler mHandler;
-    int timeTrain;
     Timer trnTimer;
-    TimerTask trainTask;
 
 
     @Override
@@ -97,20 +95,20 @@ public class MainActivity extends Activity {
                 updateScreen();
             }
         });
-        timer = new Timer(true);
+        regenTimer = new Timer(true);
         hpRegeneration = new TimerTask() {
             @Override
             public void run() {
                 if(hero.hp >= hero.maxHP){
                     hero.hp = hero.maxHP;
-                    timer.cancel();
+                    regenTimer.cancel();
                 }
                 else
                     hero.hp += hero.endurance;
                 mHandler.sendEmptyMessage(0);
             }
         };
-        timer.schedule(hpRegeneration,200,60000);
+        regenTimer.schedule(hpRegeneration,60000,60000);
         mHandler = new Handler(){
             @Override
             public void handleMessage(Message message){
@@ -141,13 +139,32 @@ public class MainActivity extends Activity {
             }
         };
         calculateRegenHP(hero.time);
+        calculateTrainingProgress(hero.time);
     }
 
     public void calculateRegenHP(long time){
-        //TODO: check counts
         if (hero.hp<hero.maxHP) hero.hp += (time/60000)*hero.endurance;
-        Log.d(LOG_TAG, "Hp regened: " + (time / 60000) * hero.endurance);
+        Log.d(LOG_TAG, "Hp restored: " + (time / 60000) * hero.endurance);
         if (hero.hp>=hero.maxHP) hero.hp = hero.maxHP;
+    }
+
+    public void calculateTrainingProgress(long time){
+        if (hero.timeTrain>0) {
+            if (hero.timeTrain < (time / 60000)) {
+                hero.timeTrain = 0;
+                mHandler.sendEmptyMessage(hero.mode);
+            }
+            if (hero.timeTrain > (time / 60000)) {
+                hero.timeTrain -= time / 60000;
+                trnTimer = new Timer(true);
+                pbTrain.setVisibility(View.VISIBLE);
+                tvTrn.setVisibility(View.VISIBLE);
+                btnTrn.setClickable(false);
+                trnTimer.purge();
+                trnTimer.schedule(new TrainTask(), 200, 60000);
+
+            }
+        }
     }
 
     @Override
@@ -180,6 +197,7 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onStop() {
+        if (trnTimer!=null)trnTimer.cancel();
         hero.saveHero();
         super.onStop();
     }
@@ -198,38 +216,21 @@ public class MainActivity extends Activity {
             hero.endurance = data.getIntExtra("end",0);
             hero.statPoints = data.getIntExtra("points",0);}
         else if (resultCode == 2){
-            //todo time training
             pbTrain.setVisibility(View.VISIBLE);
             tvTrn.setVisibility(View.VISIBLE);
             btnTrn.setClickable(false);
-            timeTrain = data.getIntExtra("timeTrain",0);
-            final int mode = data.getIntExtra("modeTrain",0);
-            Log.d(LOG_TAG, "TIME: " + timeTrain);
-            if (timeTrain!=0) {
-                pbTrain.setMax(timeTrain);
-                trnTimer = new Timer(false);
-                trainTask = new TimerTask() {
-                    int i = 0;
-
-                    @Override
-                    public void run() {
-                        if (timeTrain != 0) {
-                            pbTrain.setProgress(i);
-                            Log.d(LOG_TAG, "Progress: " + i);
-                            i++;
-                            timeTrain--;
-                            mHandler.sendEmptyMessage(0);
-                        } else {
-                            mHandler.sendEmptyMessage(mode);
-                            trnTimer.cancel();
-                        }
-                    }
-                };
-                trnTimer.schedule(trainTask, 200, 60000);
+            hero.timeTrain = data.getIntExtra("timeTrain",0);
+            hero.mode = data.getIntExtra("modeTrain",0);
+            Log.d(LOG_TAG, "TIME: " + hero.timeTrain);
+            if (hero.timeTrain!=0) {
+                trnTimer = new Timer(true);
+                trnTimer.purge();
+                trnTimer.schedule(new TrainTask(), 200, 60000);
             }
         }
         updateScreen();
     }
+
 
     public void updateScreen(){
         hero.refreshHero();
@@ -262,5 +263,35 @@ public class MainActivity extends Activity {
         }
     }
 
+    int getMaxTime(){
+        int maxTime = 0;
+        switch(hero.mode){
+            case 1:maxTime = 30; break;
+            case 2:maxTime = 60; break;
+            case 3:maxTime = 120; break;
+            case 4:maxTime = 240; break;
+        }
+        pbTrain.setMax(maxTime);
+      return maxTime;
+    }
+
+    public class TrainTask extends TimerTask{
+        int i = getMaxTime() - hero.timeTrain;
+
+        @Override
+        public void run() {
+            if (hero.timeTrain != 0) {
+                pbTrain.setProgress(i);
+                Log.d(LOG_TAG, "Progress: " + i);
+                i++;
+                hero.timeTrain--;
+                mHandler.sendEmptyMessage(0);
+            }
+            else {
+                mHandler.sendEmptyMessage(hero.mode);
+                if (trnTimer!=null){ trnTimer.purge(); trnTimer.cancel();}
+            }
+        }
+    }
 
 }

@@ -42,7 +42,6 @@ public class TrainingActivity extends Activity {
         btnConfTrain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO go main
                 if (timetrain>0) {
                     trainIntent.putExtra("timeTrain",timetrain);
                     trainIntent.putExtra("modeTrain",mode);

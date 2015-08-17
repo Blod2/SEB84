@@ -27,6 +27,8 @@ public class Hero {
     public float dodge;
     public int statPoints;
     public long time;
+    public int timeTrain;
+    public int mode;
 
     SharedPreferences sharedPref;
     Context context;
@@ -43,7 +45,9 @@ public class Hero {
         intellect = sharedPref.getInt(context.getString(R.string.preference_hero_Int_key), 1);
         endurance = sharedPref.getInt(context.getString(R.string.preference_hero_End_key),1);
         statPoints = sharedPref.getInt(context.getString(R.string.preference_hero_stPt_key),3);
+        timeTrain = sharedPref.getInt(context.getString(R.string.preference_hero_train_time),0);
         time = currentTimeMillis() - sharedPref.getLong(context.getString(R.string.preference_exit_time),currentTimeMillis());
+        mode = sharedPref.getInt(context.getString(R.string.preference_hero_train_mode),0);
         attack = strength;
         ch = (float)agility / 10;
         accuracy = (float)agility / 20 + (float)intellect / 10;
@@ -64,7 +68,9 @@ public class Hero {
         editor.putInt(context.getString(R.string.preference_hero_HP_key), hp);
         editor.putInt(context.getString(R.string.preference_hero_stPt_key),statPoints);
         editor.putInt(context.getString(R.string.preference_hero_Exp_key), exp);
-        editor.putLong(context.getString(R.string.preference_exit_time),currentTimeMillis());
+        editor.putLong(context.getString(R.string.preference_exit_time), currentTimeMillis());
+        editor.putInt(context.getString(R.string.preference_hero_train_time), timeTrain);
+        editor.putInt(context.getString(R.string.preference_hero_train_mode), mode);
         editor.commit();
     }
 

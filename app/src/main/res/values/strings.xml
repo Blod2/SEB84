@@ -13,6 +13,8 @@
     <string name="preference_hero_End_key">heroEnd</string>
     <string name="preference_hero_stPt_key">heroStPt</string>
     <string name="preference_exit_time">exitTime</string>
+    <string name="preference_hero_train_time">timeTrain</string>
+    <string name="preference_hero_train_mode">trainMode</string>
 
     <!-- StartScreen -->
     <string name="tvLogo_text">SEB-84</string>
