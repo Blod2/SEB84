@@ -215,23 +215,25 @@ public class MainActivity extends Activity {
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (data == null) return;
-        else if (resultCode == 1){
-            hero.strength = data.getIntExtra("str",0);
-            hero.agility = data.getIntExtra("agl",0);
-            hero.intellect = data.getIntExtra("int",0);
-            hero.endurance = data.getIntExtra("end",0);
-            hero.statPoints = data.getIntExtra("points",0);}
-        else if (resultCode == 2){
-            pbTrain.setVisibility(View.VISIBLE);
-            tvTrn.setVisibility(View.VISIBLE);
-            btnTrn.setClickable(false);
-            hero.timeTrain = data.getIntExtra("timeTrain",0);
-            hero.mode = data.getIntExtra("modeTrain",0);
-            Log.d(LOG_TAG, "TIME: " + hero.timeTrain);
-            if (hero.timeTrain!=0) {
-                trnTimer = new Timer(true);
-                trnTimer.purge();
-                trnTimer.schedule(new TrainTask(), 200, 60000);
+        else if (requestCode == 1) {
+            if (resultCode == 1) {
+                hero.strength = data.getIntExtra("str", 0);
+                hero.agility = data.getIntExtra("agl", 0);
+                hero.intellect = data.getIntExtra("int", 0);
+                hero.endurance = data.getIntExtra("end", 0);
+                hero.statPoints = data.getIntExtra("points", 0);
+            } else if (resultCode == 2) {
+                pbTrain.setVisibility(View.VISIBLE);
+                tvTrn.setVisibility(View.VISIBLE);
+                btnTrn.setClickable(false);
+                hero.timeTrain = data.getIntExtra("timeTrain", 0);
+                hero.mode = data.getIntExtra("modeTrain", 0);
+                Log.d(LOG_TAG, "TIME: " + hero.timeTrain);
+                if (hero.timeTrain != 0) {
+                    trnTimer = new Timer(true);
+                    trnTimer.purge();
+                    trnTimer.schedule(new TrainTask(), 200, 60000);
+                }
             }
         }
         if (requestCode==2){
@@ -301,7 +303,10 @@ public class MainActivity extends Activity {
             }
             else {
                 mHandler.sendEmptyMessage(hero.mode);
-                if (trnTimer!=null){ trnTimer.purge(); trnTimer.cancel();}
+                if (trnTimer!=null){
+                    trnTimer.purge();
+                    trnTimer.cancel();
+                }
             }
         }
     }

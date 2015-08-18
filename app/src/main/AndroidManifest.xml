@@ -42,7 +42,13 @@
         </activity>
         <activity
             android:name=".BTConnect"
-            android:label="@string/title_activity_btconnect" >
+            android:label="@string/title_activity_btconnect"
+            android:screenOrientation="landscape" >
+        </activity>
+        <activity
+            android:name=".BattleActivity"
+            android:label="@string/title_activity_battle"
+            android:screenOrientation="landscape" >
         </activity>
     </application>
 

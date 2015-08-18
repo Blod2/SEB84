@@ -67,4 +67,14 @@
     <string name="get_paired_devices">Get paired devices</string>
     <string name="search_bt">Search</string>
     <string name="action_visible">Make me visible</string>
+    <string name="title_activity_battle">BattleActivity</string>
+
+    <!-- BattleActivity -->
+    <string name="head">Head</string>
+    <string name="chest">Chest</string>
+    <string name="lower_back">Lower back</string>
+    <string name="foot">Foot</string>
+    <string name="onAttack">Attack!</string>
+    <string name="load">Waiting for opponent'S turn</string>
+
 </resources>
