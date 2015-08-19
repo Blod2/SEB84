@@ -30,8 +30,10 @@ public class BTConnect extends AppCompatActivity {
     private BluetoothAdapter mBluetoothAdapter;
     private Set<BluetoothDevice> pairedDevices;
     Button btnGetPaired;
+    Button btnServer;
     ListView lvDevices;
     ArrayAdapter<String> BTArrayAdapter;
+    Context mainContext;
 
 
     @Override
@@ -40,6 +42,18 @@ public class BTConnect extends AppCompatActivity {
         setContentView(R.layout.activity_btconnect);
         btnGetPaired = (Button)findViewById(R.id.btnPaired);
         lvDevices = (ListView)findViewById(R.id.lvDevices);
+        btnServer = (Button) findViewById(R.id.btnServer);
+        Intent intent = getIntent();
+
+        btnServer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent();
+                intent1.putExtra("device_address","server");
+                setResult(Activity.RESULT_OK, intent1);
+                finish();
+            }
+        });
 
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (mBluetoothAdapter == null) {

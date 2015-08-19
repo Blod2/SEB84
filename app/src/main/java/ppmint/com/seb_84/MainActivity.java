@@ -51,6 +51,7 @@ public class MainActivity extends Activity {
     Timer trnTimer;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,7 +99,7 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent in = new Intent(getApplicationContext(),BTConnect.class);
-                startActivityForResult(in,2);
+                startActivityForResult(in, 2);
             }
         });
         regenTimer = new Timer(true);
@@ -239,7 +240,15 @@ public class MainActivity extends Activity {
         if (requestCode==2){
             String device = data.getStringExtra("device_address");
             //TODO: battle activity and bluetoothManager
+            Intent btlint = new Intent(getApplicationContext(),BattleActivity.class);
+            btlint.putExtra("device_address",device);
+            if (device.equals(null)) return;
+            startActivityForResult(btlint,3);
             Toast.makeText(getApplicationContext(),device,Toast.LENGTH_SHORT).show();
+        }
+        if (requestCode == 3){
+            if (hero.hp < 0) Toast.makeText(getApplicationContext(),"You LOOOoooSE!",Toast.LENGTH_SHORT).show();
+            else Toast.makeText(getApplicationContext(),"You WIN!",Toast.LENGTH_SHORT).show();
         }
         updateScreen();
     }

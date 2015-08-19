@@ -35,4 +35,15 @@
         android:layout_alignEnd="@+id/lvDevices"
         android:onClick="find" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/server"
+        android:id="@+id/btnServer"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/btnSearch"
+        android:layout_toStartOf="@+id/btnSearch"
+        android:layout_marginRight="47dp"
+        android:layout_marginEnd="47dp" />
+
 </RelativeLayout>
