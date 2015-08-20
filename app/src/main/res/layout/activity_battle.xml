@@ -99,7 +99,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/rbAHead"
             android:checked="false"
-            android:layout_marginLeft="20dp" />
+            android:layout_marginLeft="20dp"
+            android:onClick="onRadioButtonClicked" />
 
         <RadioButton
             android:layout_width="match_parent"
@@ -107,7 +108,8 @@
             android:id="@+id/rbAChest"
             android:checked="false"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="10dp"
+            android:onClick="onRadioButtonClicked" />
 
         <RadioButton
             android:layout_width="match_parent"
@@ -115,7 +117,8 @@
             android:id="@+id/rbALow"
             android:checked="false"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="10dp"
+            android:onClick="onRadioButtonClicked" />
 
         <RadioButton
             android:layout_width="match_parent"
@@ -123,7 +126,8 @@
             android:id="@+id/rbAFoot"
             android:checked="false"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="10dp"
+            android:onClick="onRadioButtonClicked" />
     </RadioGroup>
 
     <RadioGroup
@@ -139,28 +143,32 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/rbDHead"
-            android:checked="false" />
+            android:checked="false"
+            android:onClick="onRadioButtonClicked" />
 
         <RadioButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/rbDChest"
             android:checked="false"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="10dp"
+            android:onClick="onRadioButtonClicked" />
 
         <RadioButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/rbDLow"
             android:checked="false"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="10dp"
+            android:onClick="onRadioButtonClicked" />
 
         <RadioButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/rbDFoot"
             android:checked="false"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="10dp"
+            android:onClick="onRadioButtonClicked" />
     </RadioGroup>
 
     <TextView

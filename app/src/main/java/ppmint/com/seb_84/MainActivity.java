@@ -115,7 +115,7 @@ public class MainActivity extends Activity {
                 mHandler.sendEmptyMessage(0);
             }
         };
-        regenTimer.schedule(hpRegeneration,60000,60000);
+        regenTimer.schedule(hpRegeneration,600,600);
         mHandler = new Handler(){
             @Override
             public void handleMessage(Message message){
@@ -202,6 +202,7 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+
     @Override
     protected void onStop() {
         if (trnTimer!=null)trnTimer.cancel();
@@ -247,7 +248,9 @@ public class MainActivity extends Activity {
             Toast.makeText(getApplicationContext(),device,Toast.LENGTH_SHORT).show();
         }
         if (requestCode == 3){
-            if (hero.hp < 0) Toast.makeText(getApplicationContext(),"You LOOOoooSE!",Toast.LENGTH_SHORT).show();
+            if (resultCode == 3)
+            hero.hp = data.getIntExtra("myHP",10);
+            if (hero.hp <= 0) Toast.makeText(getApplicationContext(),"You LOOOoooSE!",Toast.LENGTH_SHORT).show();
             else Toast.makeText(getApplicationContext(),"You WIN!",Toast.LENGTH_SHORT).show();
         }
         updateScreen();
@@ -319,5 +322,7 @@ public class MainActivity extends Activity {
             }
         }
     }
+
+
 
 }

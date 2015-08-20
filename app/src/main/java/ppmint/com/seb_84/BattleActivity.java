@@ -149,7 +149,7 @@ public class BattleActivity extends Activity {
                 // Send a message using content of the edit text widget
                 if (battleFlag) {
                     sendMsg(attackPackage());
-                    btnToAttack.setClickable(false);
+                    btnToAttack.setVisibility(View.INVISIBLE);
                     battleFlag = false;
                 }
                 else{
@@ -157,10 +157,17 @@ public class BattleActivity extends Activity {
                     int myDamage = hero.attack;
                     if (myBlock==enemyTarget) enemyDamage = 0;
                     hero.hp -= enemyDamage;
+                    pbMyHero.setProgress(hero.hp);
                     if (myTarget==enemyBlock) myDamage = 0;
                     pbEnemyHero.setProgress(pbEnemyHero.getProgress()-myDamage);
-                    sendMsg(defencePackage(pbEnemyHero.getProgress() - myDamage, hero.hp));
+                    sendMsg(defencePackage(pbEnemyHero.getProgress(), hero.hp));
                     battleFlag = true;
+                    if (pbMyHero.getProgress() <= 0 || pbEnemyHero.getProgress() <= 0) {
+                        if (pbMyHero.getProgress() <=0 )hero.hp = 0;
+                        intent.putExtra("myHP", hero.hp);
+                        setResult(3, intent);
+                        finish();
+                    }
                 }
             }
         });
@@ -282,27 +289,37 @@ public class BattleActivity extends Activity {
             splitter.setString(mess);
             String head = splitter.next();
             if (head.equals("F")){
-            tvEnemyHero.setText(splitter.next());
-            pbEnemyHero.setMax(Integer.valueOf(splitter.next()));
-            pbEnemyHero.setProgress(Integer.valueOf(splitter.next()));
-            enemyAttack = Integer.valueOf(splitter.next());
-            enemyDefence = Integer.valueOf(splitter.next());
+                tvEnemyHero.setText(splitter.next());
+                pbEnemyHero.setMax(Integer.valueOf(splitter.next()));
+                pbEnemyHero.setProgress(Integer.valueOf(splitter.next()));
+                enemyAttack = Integer.valueOf(splitter.next());
+                enemyDefence = Integer.valueOf(splitter.next());
                 if (firstMes){
                     String message = constructFirstMessage();
                     if (message != null) sendMsg(message);
                     firstMes = false;
                 }
+                Log.d(BATTLE_LOG,"Opponents has been loaded");
             }
             if (head.equals("A")){
                 enemyTarget = Integer.valueOf(splitter.next());
                 enemyBlock = Integer.valueOf(splitter.next());
                 battleFlag = false;
+                Log.d(BATTLE_LOG, "attack: " + enemyTarget + " " + enemyBlock);
             }
             if (head.equals("D")){
-                pbEnemyHero.setProgress(Integer.valueOf(splitter.next()));
                 hero.hp = Integer.valueOf(splitter.next());
                 pbMyHero.setProgress(hero.hp);
-                btnToAttack.setClickable(true);
+                pbEnemyHero.setProgress(Integer.valueOf(splitter.next()));
+                btnToAttack.setVisibility(View.VISIBLE);
+                battleFlag = true;
+                if (pbMyHero.getProgress() <= 0 || pbEnemyHero.getProgress() <= 0){
+                    if (pbMyHero.getProgress() <=0 )hero.hp = 0;
+                    intent.putExtra("myHP",hero.hp);
+                    setResult(3,intent);
+                    finish();
+                }
+                Log.d(BATTLE_LOG, "defence: " + pbEnemyHero.getProgress() + " " + myTarget + " " + myBlock);
             }
         }
     }
@@ -310,7 +327,6 @@ public class BattleActivity extends Activity {
     private String attackPackage(){
         return "A:" + myTarget+ ":" + myBlock;
     }
-
     private String defencePackage(int enHP, int myHP){
         return "D:"+enHP+":"+myHP;
     }
