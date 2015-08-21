@@ -46,7 +46,6 @@ public class MainActivity extends Activity {
     Button btnBtl;
     public Hero hero;
     Timer regenTimer;
-    TimerTask hpRegeneration;
     Handler mHandler;
     Timer trnTimer;
 
@@ -98,24 +97,10 @@ public class MainActivity extends Activity {
         btnBtl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent in = new Intent(getApplicationContext(),BTConnect.class);
+                Intent in = new Intent(getApplicationContext(), BTConnect.class);
                 startActivityForResult(in, 2);
             }
         });
-        regenTimer = new Timer(true);
-        hpRegeneration = new TimerTask() {
-            @Override
-            public void run() {
-                if(hero.hp >= hero.maxHP){
-                    hero.hp = hero.maxHP;
-                    regenTimer.cancel();
-                }
-                else
-                    hero.hp += hero.endurance;
-                mHandler.sendEmptyMessage(0);
-            }
-        };
-        regenTimer.schedule(hpRegeneration,600,600);
         mHandler = new Handler(){
             @Override
             public void handleMessage(Message message){
@@ -204,6 +189,14 @@ public class MainActivity extends Activity {
 
 
     @Override
+    protected void onResume() {
+        if (regenTimer!=null) regenTimer.cancel();
+        regenTimer = new Timer(true);
+        regenTimer.schedule(new RegenTask(),600,600);
+        super.onResume();
+    }
+
+    @Override
     protected void onStop() {
         if (trnTimer!=null)trnTimer.cancel();
         hero.saveHero();
@@ -248,10 +241,16 @@ public class MainActivity extends Activity {
             Toast.makeText(getApplicationContext(),device,Toast.LENGTH_SHORT).show();
         }
         if (requestCode == 3){
-            if (resultCode == 3)
+            if (resultCode == 3){
             hero.hp = data.getIntExtra("myHP",10);
-            if (hero.hp <= 0) Toast.makeText(getApplicationContext(),"You LOOOoooSE!",Toast.LENGTH_SHORT).show();
-            else Toast.makeText(getApplicationContext(),"You WIN!",Toast.LENGTH_SHORT).show();
+
+            if (hero.hp <= 0){ Toast.makeText(getApplicationContext(),getString(R.string.toast_loose),Toast.LENGTH_SHORT).show();
+                hero.exp+=hero.lvl*1;}
+            else{ Toast.makeText(getApplicationContext(),getString(R.string.toast_win),Toast.LENGTH_SHORT).show();
+            hero.exp+=hero.lvl*3;}}
+            if (resultCode == 4) {
+                Toast.makeText(getApplicationContext(),getString(R.string.toast_discon),Toast.LENGTH_LONG).show();
+            }
         }
         updateScreen();
     }
@@ -323,6 +322,18 @@ public class MainActivity extends Activity {
         }
     }
 
+    public class RegenTask extends TimerTask{
+        @Override
+        public void run() {
+            if(hero.hp >= hero.maxHP){
+                hero.hp = hero.maxHP;
+                regenTimer.cancel();
+            }
+            else
+                hero.hp += hero.endurance;
+            mHandler.sendEmptyMessage(0);
+        }
+    }
 
 
 }

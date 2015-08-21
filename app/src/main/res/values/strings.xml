@@ -25,7 +25,7 @@
     <string name="preference_hero_train_mode" translatable="false">trainMode</string>
 
     <!-- StartScreen -->
-    <string name="tvLogo_text">SEB-84</string>
+    <string name="tvLogo_text" translatable="false">SEB-84</string>
     <string name="tvHero_name">Enter new hero\'s name:</string>
     <string name="btnSet_name">Let\'s ROCK!!!!!</string>
     <string name="toast_noname">Incorrect name!</string>
@@ -42,8 +42,8 @@
     <string name="action_settings">Settings</string>
 
     <!-- HeroScreen -->
-    <string name="hp">HP</string>
-    <string name="exp">Exp</string>
+    <string name="hp" translatable="false">HP</string>
+    <string name="exp" translatable="false">EXP</string>
     <string name="stats">Stats:</string>
     <string name="strength">Strength:</string>
     <string name="agility">Agility:</string>
@@ -57,6 +57,9 @@
     <string name="training">Training</string>
     <string name="toBattle">To Battle</string>
     <string name="lvlUp">Level UP</string>
+    <string name="toast_win">You WIN!!!</string>
+    <string name="toast_loose">You LOOSE!!!</string>
+    <string name="toast_discon">Opponent has been disconnected.</string>
 
     <!-- Training -->
     <string name="train">Choose the type of training:</string>

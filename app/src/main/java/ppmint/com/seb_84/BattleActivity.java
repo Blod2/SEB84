@@ -41,6 +41,7 @@ public class BattleActivity extends Activity {
     private int enemyTarget = 0;
     private int enemyBlock = 0;
     private boolean battleFlag = true;
+    private boolean disconnectFlag;
 
     TextView tvMyHero;
     TextView tvEnemyHero;
@@ -85,12 +86,24 @@ public class BattleActivity extends Activity {
         tvMyHero.setText(hero.name);
         pbMyHero.setMax(hero.maxHP);
         pbMyHero.setProgress(hero.hp);
-        setupChat();
         intent = getIntent();
-
+        disconnectFlag = true;
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        setupChat();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (disconnectFlag) sendMsg(disconnectPackage());
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         if (mBattleManager != null) {
@@ -106,16 +119,17 @@ public class BattleActivity extends Activity {
         // Performing this check in onResume() covers the case in which BT was
         // not enabled during onStart(), so we were paused to enable it...
         // onResume() will be called when ACTION_REQUEST_ENABLE activity returns.
+
         if (mBattleManager != null) {
+            String deviceadr = intent.getStringExtra("device_address");
+            if (!deviceadr.equals("server")) {
+                connectDevice(intent);
+            }
             // Only if the state is STATE_NONE, do we know that we haven't started already
             if (mBattleManager.getState() == BattleManager.STATE_NONE) {
                 // Start the Bluetooth chat services
                 Log.d(BATTLE_LOG,"starting battle service");
                 mBattleManager.start();
-                String deviceadr = intent.getStringExtra("device_address");
-                if (!deviceadr.equals("server")) {
-                    connectDevice(intent);
-                }
             }
         }
     }
@@ -162,18 +176,14 @@ public class BattleActivity extends Activity {
                     pbEnemyHero.setProgress(pbEnemyHero.getProgress()-myDamage);
                     sendMsg(defencePackage(pbEnemyHero.getProgress(), hero.hp));
                     battleFlag = true;
-                    if (pbMyHero.getProgress() <= 0 || pbEnemyHero.getProgress() <= 0) {
-                        if (pbMyHero.getProgress() <=0 )hero.hp = 0;
-                        intent.putExtra("myHP", hero.hp);
-                        setResult(3, intent);
-                        finish();
-                    }
+                    endBattle();
                 }
             }
         });
         mBattleManager = new BattleManager(getApplicationContext(), mHandler);
         mOutStringBuffer =  new StringBuffer("");
     }
+
 
     public void onRadioButtonClicked(View view) {
         // Is the button now checked?
@@ -258,6 +268,10 @@ public class BattleActivity extends Activity {
                         sendMsg(constructFirstMessage());
                     }
                     break;
+                case Constants.MESSAGE_TOAST:
+                        Toast.makeText(getApplicationContext(), msg.getData().getString(Constants.TOAST),
+                                Toast.LENGTH_SHORT).show();
+                    break;
             }
         }
     };
@@ -282,7 +296,7 @@ public class BattleActivity extends Activity {
     boolean firstMes = true;
     private void parseMessage(String mess){
         //TODO: parsing messages
-        Pattern xx = Pattern.compile("[AFD]:([^*$]*)");
+        Pattern xx = Pattern.compile("[AFDE]:([^*$]*)");
         Matcher m = xx.matcher(mess);
         if (m.matches()){
             TextUtils.SimpleStringSplitter splitter = new TextUtils.SimpleStringSplitter(':');
@@ -298,8 +312,8 @@ public class BattleActivity extends Activity {
                     String message = constructFirstMessage();
                     if (message != null) sendMsg(message);
                     firstMes = false;
+                    Log.d(BATTLE_LOG,"Opponents has been loaded");
                 }
-                Log.d(BATTLE_LOG,"Opponents has been loaded");
             }
             if (head.equals("A")){
                 enemyTarget = Integer.valueOf(splitter.next());
@@ -313,13 +327,14 @@ public class BattleActivity extends Activity {
                 pbEnemyHero.setProgress(Integer.valueOf(splitter.next()));
                 btnToAttack.setVisibility(View.VISIBLE);
                 battleFlag = true;
-                if (pbMyHero.getProgress() <= 0 || pbEnemyHero.getProgress() <= 0){
-                    if (pbMyHero.getProgress() <=0 )hero.hp = 0;
-                    intent.putExtra("myHP",hero.hp);
-                    setResult(3,intent);
-                    finish();
-                }
+                endBattle();
                 Log.d(BATTLE_LOG, "defence: " + pbEnemyHero.getProgress() + " " + myTarget + " " + myBlock);
+            }
+            if(head.equals("E")){
+                disconnectFlag = false;
+                mBattleManager.stop();
+                setResult(4);
+                finish();
             }
         }
     }
@@ -330,5 +345,17 @@ public class BattleActivity extends Activity {
     private String defencePackage(int enHP, int myHP){
         return "D:"+enHP+":"+myHP;
     }
+    private String disconnectPackage(){
+        return "E:";
+    }
 
+    private void endBattle(){
+        if (pbMyHero.getProgress() <= 0 || pbEnemyHero.getProgress() <= 0){
+            if (pbMyHero.getProgress() <=0 )hero.hp = 0;
+            intent.putExtra("myHP",hero.hp);
+            setResult(3, intent);
+            mBattleManager.stop();
+            finish();
+        }
+    }
 }

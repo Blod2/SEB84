@@ -34,6 +34,7 @@ public class BattleManager {
     private ConnectThread mConnectThread;
     private ConnectedThread mConnectedThread;
     private int mState;
+    private boolean stopFlag = true;
 
     // Constants that indicate the current connection state
     public static final int STATE_NONE = 0;       // we're doing nothing
@@ -174,6 +175,7 @@ public class BattleManager {
      */
     public synchronized void stop() {
         Log.d(TAG, "stop");
+        stopFlag = false;
 
         if (mConnectThread != null) {
             mConnectThread.cancel();
@@ -223,7 +225,9 @@ public class BattleManager {
         mHandler.sendMessage(msg);
 
         // Start the service over to restart listening mode
-        BattleManager.this.start();
+        if (stopFlag) {
+            BattleManager.this.start();
+        }
     }
 
     /**
@@ -238,7 +242,9 @@ public class BattleManager {
         mHandler.sendMessage(msg);
 
         // Start the service over to restart listening mode
-        BattleManager.this.start();
+        if (stopFlag) {
+            BattleManager.this.start();
+        }
     }
 
     /**
@@ -432,6 +438,7 @@ public class BattleManager {
                     Log.e(TAG, "disconnected", e);
                     connectionLost();
                     // Start the service over to restart listening mode
+                    if (stopFlag)
                     BattleManager.this.start();
                     break;
                 }
