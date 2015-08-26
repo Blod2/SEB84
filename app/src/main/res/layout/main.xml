@@ -28,7 +28,7 @@
         android:layout_below="@+id/tvName"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:src="@drawable/hero_1" />
+        android:src="@drawable/hero_t" />
 
     <ProgressBar
         style="?android:attr/progressBarStyleHorizontal"
@@ -155,7 +155,8 @@
         android:layout_toRightOf="@+id/textView6"
         android:layout_toEndOf="@+id/textView6"
         android:textColor="#ffffffff"
-        android:text="100" />
+        android:text="100"
+        android:layout_marginLeft="10dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -188,7 +189,8 @@
         android:layout_alignBottom="@+id/textView6"
         android:layout_toRightOf="@+id/textView6"
         android:layout_toEndOf="@+id/textView6"
-        android:textColor="#ffffffff" />
+        android:textColor="#ffffffff"
+        android:layout_marginLeft="10dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -275,7 +277,8 @@
         android:layout_alignBottom="@+id/textView7"
         android:layout_toRightOf="@+id/textView9"
         android:layout_toEndOf="@+id/textView9"
-        android:textColor="#ffffffff" />
+        android:textColor="#ffffffff"
+        android:layout_marginLeft="10dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -319,7 +322,8 @@
         android:layout_alignBottom="@+id/textView11"
         android:layout_toRightOf="@+id/textView9"
         android:layout_toEndOf="@+id/textView9"
-        android:textColor="#ffffffff" />
+        android:textColor="#ffffffff"
+        android:layout_marginLeft="10dp" />
 
     <Button
         android:layout_width="wrap_content"

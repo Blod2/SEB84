@@ -2,6 +2,7 @@ package ppmint.com.seb_84;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import static java.lang.System.currentTimeMillis;
 
@@ -19,10 +20,10 @@ public class Hero {
     public int intellect;
     public int endurance;
     public int attack;
-    public float ch;
-    public float accuracy;
+    public int ch;
+    public int accuracy;
     public int defence;
-    public float dodge;
+    public int dodge;
     public int statPoints;
     public long time;
     public int timeTrain;
@@ -46,13 +47,7 @@ public class Hero {
         timeTrain = sharedPref.getInt(context.getString(R.string.preference_hero_train_time),0);
         time = currentTimeMillis() - sharedPref.getLong(context.getString(R.string.preference_exit_time),currentTimeMillis());
         mode = sharedPref.getInt(context.getString(R.string.preference_hero_train_mode),0);
-        attack = strength;
-        ch = (float)agility / 10;
-        accuracy = (float)agility / 20 + (float)intellect / 10;
-        defence = endurance;
-        dodge = (float)agility / 10 + (float)intellect / 20;
-        maxHP = strength * 5 + endurance * 5;
-        maxExp = lvl * 15;
+        refreshHero();
     }
 
     public void saveHero(){
@@ -75,11 +70,22 @@ public class Hero {
     public void refreshHero(){
         //refreshing only countable stats
         attack = strength;
-        ch = (float)agility / 10;
-        accuracy = (float)agility / 20 + (float)intellect / 10;
         defence = endurance;
-        dodge = (float)agility / 10 + (float)intellect / 20;
+        if (ch >= 50) ch = 50;
+        else
+            ch = Math.round(agility / 4);
+        if (accuracy >= 50) accuracy = 50;
+        else
+            accuracy = Math.round(agility / 6 + intellect / 3);
+        if (dodge >= 50) dodge = 50;
+        else
+            dodge = Math.round(agility / 3 + intellect / 6);
         maxHP = strength * 5 + endurance * 5;
-        maxExp = lvl * 15;
+        maxExp = lastExp(lvl);
+    }
+
+    public int lastExp(int x){
+        if(x == 1) return 10;
+        return lastExp(x-1) + x * 10;
     }
 }

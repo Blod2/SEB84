@@ -51,7 +51,6 @@
         android:layout_height="wrap_content"
         android:text="@string/confirm"
         android:id="@+id/btnConfirm"
-        android:layout_marginBottom="16dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 
@@ -161,21 +160,21 @@
         android:textSize="20dp"
         android:layout_alignTop="@+id/btnStrAdd"
         android:layout_toRightOf="@+id/btnStrAdd"
-        android:layout_alignRight="@+id/btnAglSub"
-        android:layout_alignEnd="@+id/btnAglSub" />
+        android:layout_alignRight="@+id/btnIntSub"
+        android:layout_alignEnd="@+id/btnIntSub" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/add"
         android:id="@+id/btnAglAdd"
-        android:layout_alignBottom="@+id/etAgl"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:layout_alignTop="@+id/btnAglSub"
         android:layout_alignLeft="@+id/btnStrAdd"
         android:layout_alignStart="@+id/btnStrAdd"
         android:layout_toLeftOf="@+id/btnStrSub"
-        android:layout_toStartOf="@+id/btnStrSub"
-        android:textStyle="bold"
-        android:textSize="20dp" />
+        android:layout_toStartOf="@+id/btnStrSub" />
 
     <Button
         android:layout_width="wrap_content"
@@ -184,23 +183,23 @@
         android:id="@+id/btnAglSub"
         android:textStyle="bold"
         android:textSize="20dp"
-        android:layout_above="@+id/btnIntAdd"
+        android:layout_alignTop="@+id/etAgl"
         android:layout_toRightOf="@+id/btnStrAdd"
-        android:layout_alignRight="@+id/btnIntSub"
-        android:layout_alignEnd="@+id/btnIntSub" />
+        android:layout_alignRight="@+id/btnStrSub"
+        android:layout_alignEnd="@+id/btnStrSub" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/add"
         android:id="@+id/btnIntAdd"
-        android:layout_above="@+id/btnEndAdd"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:layout_above="@+id/etEnd"
         android:layout_alignLeft="@+id/btnAglAdd"
         android:layout_alignStart="@+id/btnAglAdd"
         android:layout_toLeftOf="@+id/btnAglSub"
-        android:layout_toStartOf="@+id/btnAglSub"
-        android:textStyle="bold"
-        android:textSize="20dp" />
+        android:layout_toStartOf="@+id/btnAglSub" />
 
     <Button
         android:layout_width="wrap_content"
@@ -210,10 +209,10 @@
         android:layout_alignBottom="@+id/etEnd"
         android:layout_alignLeft="@+id/textView16"
         android:layout_alignStart="@+id/textView16"
-        android:layout_alignRight="@+id/btnIntAdd"
-        android:layout_alignEnd="@+id/btnIntAdd"
         android:textStyle="bold"
-        android:textSize="20dp" />
+        android:textSize="20dp"
+        android:layout_toLeftOf="@+id/btnIntSub"
+        android:layout_toStartOf="@+id/btnIntSub" />
 
     <Button
         android:layout_width="wrap_content"
@@ -222,7 +221,7 @@
         android:id="@+id/btnIntSub"
         android:textStyle="bold"
         android:textSize="20dp"
-        android:layout_below="@+id/btnAglSub"
+        android:layout_alignTop="@+id/btnIntAdd"
         android:layout_alignLeft="@+id/btnEndSub"
         android:layout_alignStart="@+id/btnEndSub"
         android:layout_alignRight="@+id/btnEndSub"

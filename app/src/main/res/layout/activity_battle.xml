@@ -79,144 +79,170 @@
         android:layout_height="wrap_content"
         android:text="@string/onAttack"
         android:id="@+id/btnToAttack"
-        android:layout_below="@+id/pbMyHero"
-        android:layout_centerHorizontal="true"
         android:textStyle="bold"
-        android:textColor="#ff000000" />
+        android:textColor="#ff000000"
+        android:typeface="sans"
+        android:layout_alignTop="@+id/pbMyHero"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp" />
 
     <RadioGroup
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_alignTop="@+id/imgMyHero"
         android:layout_toRightOf="@+id/imgMyHero"
-        android:layout_alignBottom="@+id/pbMyHero"
         android:layout_toStartOf="@+id/btnToAttack"
-        android:id="@+id/radioGroup"
-        android:layout_toLeftOf="@+id/btnToAttack">
+        android:id="@+id/rgMy"
+        android:layout_alignBottom="@+id/imgMyHero">
 
         <RadioButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="37dp"
+            android:layout_height="0dp"
             android:id="@+id/rbDHead"
             android:checked="false"
-            android:layout_marginLeft="20dp"
-            android:onClick="onRadioButtonClicked" />
+            android:onClick="onRadioButtonClicked"
+            android:layout_weight="1"
+            android:layout_marginLeft="20dp" />
 
         <RadioButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="37dp"
+            android:layout_height="0dp"
             android:id="@+id/rbDChest"
             android:checked="false"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
-            android:onClick="onRadioButtonClicked" />
+            android:onClick="onRadioButtonClicked"
+            android:layout_weight="1" />
 
         <RadioButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="37dp"
+            android:layout_height="0dp"
             android:id="@+id/rbDLow"
             android:checked="false"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
-            android:onClick="onRadioButtonClicked" />
+            android:onClick="onRadioButtonClicked"
+            android:layout_weight="1" />
 
         <RadioButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="37dp"
+            android:layout_height="0dp"
             android:id="@+id/rbDFoot"
             android:checked="false"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
-            android:onClick="onRadioButtonClicked" />
+            android:onClick="onRadioButtonClicked"
+            android:layout_weight="1" />
+    </RadioGroup>
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignTop="@+id/imgEnemyHero"
+        android:layout_alignBottom="@+id/rgMy"
+        android:layout_toLeftOf="@+id/imgEnemyHero"
+        android:id="@+id/rgEnemy">
+
+        <RadioButton
+            android:layout_width="37dp"
+            android:layout_height="0dp"
+            android:id="@+id/rbAHead"
+            android:checked="false"
+            android:onClick="onRadioButtonClicked"
+            android:layout_gravity="right"
+            android:layout_weight="1"
+            android:layout_marginRight="15dp" />
+
+        <RadioButton
+            android:layout_width="37dp"
+            android:layout_height="0dp"
+            android:id="@+id/rbAChest"
+            android:checked="false"
+            android:layout_marginTop="10dp"
+            android:onClick="onRadioButtonClicked"
+            android:layout_gravity="right"
+            android:layout_weight="1"
+            android:layout_marginRight="15dp" />
+
+        <RadioButton
+            android:layout_width="37dp"
+            android:layout_height="0dp"
+            android:id="@+id/rbALow"
+            android:checked="false"
+            android:layout_marginTop="10dp"
+            android:onClick="onRadioButtonClicked"
+            android:layout_gravity="right"
+            android:layout_weight="1"
+            android:layout_marginRight="15dp" />
+
+        <RadioButton
+            android:layout_width="37dp"
+            android:layout_height="0dp"
+            android:id="@+id/rbAFoot"
+            android:checked="false"
+            android:layout_marginTop="10dp"
+            android:onClick="onRadioButtonClicked"
+            android:layout_gravity="right"
+            android:layout_weight="1"
+            android:layout_marginRight="15dp" />
     </RadioGroup>
 
     <RadioGroup
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignTop="@+id/imgEnemyHero"
-        android:layout_toLeftOf="@+id/imgEnemyHero"
-        android:layout_toEndOf="@+id/btnToAttack"
-        android:layout_alignBottom="@+id/radioGroup"
-        android:layout_toRightOf="@+id/btnToAttack">
+        android:layout_toLeftOf="@+id/rgEnemy"
+        android:layout_alignBottom="@+id/rgMy"
+        android:layout_toRightOf="@+id/rgMy"
+        android:layout_toEndOf="@+id/rgMy"
+        android:layout_alignParentTop="true">
 
-        <RadioButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/rbAHead"
-            android:checked="false"
-            android:onClick="onRadioButtonClicked" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/head"
+            android:id="@+id/textView19"
+            android:textColor="#ff000000"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1"
+            android:layout_gravity="center_horizontal" />
 
-        <RadioButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/rbAChest"
-            android:checked="false"
-            android:layout_marginTop="10dp"
-            android:onClick="onRadioButtonClicked" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/chest"
+            android:id="@+id/textView19"
+            android:textColor="#ff000000"
+            android:textStyle="bold"
+            android:layout_marginTop="25dp"
+            android:layout_weight="1"
+            android:layout_gravity="center_horizontal" />
 
-        <RadioButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/rbALow"
-            android:checked="false"
-            android:layout_marginTop="10dp"
-            android:onClick="onRadioButtonClicked" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/lower_back"
+            android:id="@+id/textView19"
+            android:textColor="#ff000000"
+            android:textStyle="bold"
+            android:layout_marginTop="25dp"
+            android:layout_weight="1"
+            android:layout_gravity="center_horizontal" />
 
-        <RadioButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/rbAFoot"
-            android:checked="false"
-            android:layout_marginTop="10dp"
-            android:onClick="onRadioButtonClicked" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/foot"
+            android:id="@+id/textView19"
+            android:textColor="#ff000000"
+            android:textStyle="bold"
+            android:layout_marginTop="25dp"
+            android:layout_weight="1"
+            android:layout_gravity="center_horizontal" />
     </RadioGroup>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/head"
-        android:id="@+id/textView21"
-        android:layout_alignTop="@+id/radioGroup"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
-        android:textColor="#ff000000"
-        android:textStyle="bold" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/chest"
-        android:id="@+id/textView22"
-        android:layout_below="@+id/textView21"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:textColor="#ff000000"
-        android:textStyle="bold" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/lower_back"
-        android:id="@+id/textView23"
-        android:layout_below="@+id/textView22"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:textColor="#ff000000"
-        android:textStyle="bold" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/foot"
-        android:id="@+id/textView24"
-        android:layout_below="@+id/textView23"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:textColor="#ff000000"
-        android:textStyle="bold" />
 
 </RelativeLayout>

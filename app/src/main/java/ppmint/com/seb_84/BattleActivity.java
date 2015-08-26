@@ -21,8 +21,11 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static java.lang.System.currentTimeMillis;
 
 
 public class BattleActivity extends Activity {
@@ -36,6 +39,9 @@ public class BattleActivity extends Activity {
     SharedPreferences sharedPref;
     private int enemyAttack = 0;
     private int enemyDefence = 0;
+    private int enemyCH = 0;
+    private int enemyDD= 0;
+    private int enemyAC = 0;
     private int myTarget = 0;
     private int myBlock = 0;
     private int enemyTarget = 0;
@@ -167,12 +173,18 @@ public class BattleActivity extends Activity {
                     battleFlag = false;
                 }
                 else{
-                    int enemyDamage = enemyAttack;
-                    int myDamage = hero.attack;
+                    int enemyDamage = enemyAttack - (int)(enemyAttack * defProc(hero.defence));
+                    Log.d(BATTLE_LOG,"enemyDamage:" + String.valueOf(enemyDamage));
+                    int myDamage = hero.attack - (int)(hero.attack * defProc(enemyDefence));
+                    Log.d(BATTLE_LOG,"myDamage:" + String.valueOf(myDamage));
                     if (myBlock==enemyTarget) enemyDamage = 0;
+                    if (hero.dodge >= roll() && hero.dodge > enemyAC) enemyDamage = 0;
+                    if (enemyCH >= roll()) enemyDamage *= 2;
                     hero.hp -= enemyDamage;
                     pbMyHero.setProgress(hero.hp);
                     if (myTarget==enemyBlock) myDamage = 0;
+                    if (enemyDD >= roll() && enemyDD > hero.accuracy) myDamage = 0;
+                    if (hero.ch >= roll()) myDamage *= 2;
                     pbEnemyHero.setProgress(pbEnemyHero.getProgress()-myDamage);
                     sendMsg(defencePackage(pbEnemyHero.getProgress(), hero.hp));
                     battleFlag = true;
@@ -188,9 +200,9 @@ public class BattleActivity extends Activity {
     public void onRadioButtonClicked(View view) {
         // Is the button now checked?
         boolean checked = ((RadioButton) view).isChecked();
-
         // Check which radio button was clicked
         switch(view.getId()) {
+
             case R.id.rbAHead:
                 if (checked)
                     myTarget = 1;
@@ -245,6 +257,15 @@ public class BattleActivity extends Activity {
         }
     }
 
+    private int roll(){
+        Random rand = new Random(currentTimeMillis());
+        return rand.nextInt(100);
+    }
+
+    public double defProc(int x){
+        return (0.06 * x) / (1 + 0.06 * x);
+    }
+
     private final Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -290,7 +311,8 @@ public class BattleActivity extends Activity {
     }
 
     private String constructFirstMessage(){
-        return "F:"+hero.name+":"+hero.maxHP+":"+hero.hp+":"+hero.attack+":"+hero.defence;
+        return "F:"+hero.name+":"+hero.maxHP+":"+hero.hp+":"+hero.attack+":"+hero.defence+
+                ":"+hero.ch+":"+hero.accuracy+":"+hero.dodge;
     }
 
     boolean firstMes = true;
@@ -308,6 +330,10 @@ public class BattleActivity extends Activity {
                 pbEnemyHero.setProgress(Integer.valueOf(splitter.next()));
                 enemyAttack = Integer.valueOf(splitter.next());
                 enemyDefence = Integer.valueOf(splitter.next());
+                enemyCH = Integer.valueOf(splitter.next());
+                enemyAC = Integer.valueOf(splitter.next());
+                enemyDD = Integer.valueOf(splitter.next());
+                Log.d(BATTLE_LOG,String.valueOf(enemyDefence));
                 if (firstMes){
                     String message = constructFirstMessage();
                     if (message != null) sendMsg(message);

@@ -192,7 +192,7 @@ public class MainActivity extends Activity {
     protected void onResume() {
         if (regenTimer!=null) regenTimer.cancel();
         regenTimer = new Timer(true);
-        regenTimer.schedule(new RegenTask(),600,600);
+        regenTimer.schedule(new RegenTask(), 600, 600);
         super.onResume();
     }
 
@@ -279,13 +279,19 @@ public class MainActivity extends Activity {
     }
 
     public void lvlUp(){
-        if (hero.exp >= hero.maxExp){
+        if (hero.lvl == Constants.MAXIMAL_LEVEL){
+            hero.lvl = Constants.MAXIMAL_LEVEL;
+            Toast.makeText(getApplicationContext(),"You have maximal level! You reached!",Toast.LENGTH_SHORT).show();
+        }
+        else
+            if (hero.exp >= hero.maxExp){
             hero.exp -= hero.maxExp;
             hero.lvl++;
             hero.statPoints += 3;
-            hero.maxExp = hero.lvl * 15;
+            hero.maxExp = hero.lastExp(hero.lvl);
             Toast.makeText(getApplicationContext(),"Level UP!!!",Toast.LENGTH_SHORT).show();
-        }
+
+            }
     }
 
     int getMaxTime(){
