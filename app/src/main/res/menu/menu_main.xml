@@ -3,4 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools" tools:context="ppmint.com.seb_84.MainActivity">
     <item android:id="@+id/lvlUp" android:title="@string/lvlUp"
         android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/armory" android:title="@string/armory"
+        android:orderInCategory="100" app:showAsAction="never" />
 </menu>

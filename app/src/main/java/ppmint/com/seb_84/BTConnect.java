@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,22 +18,17 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.Set;
 
 public class BTConnect extends AppCompatActivity {
 
 
     private static final int REQUEST_ENABLE_BT = 1;
-    Intent intent = new Intent();
     private BluetoothAdapter mBluetoothAdapter;
-    private Set<BluetoothDevice> pairedDevices;
     Button btnGetPaired;
     Button btnServer;
     ListView lvDevices;
     ArrayAdapter<String> BTArrayAdapter;
-    Context mainContext;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +60,7 @@ public class BTConnect extends AppCompatActivity {
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
         }
-        BTArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
+        BTArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
         lvDevices.setAdapter(BTArrayAdapter);
 
         registerReceiver(bReceiver, new IntentFilter(BluetoothDevice.ACTION_FOUND));
@@ -129,7 +123,7 @@ public class BTConnect extends AppCompatActivity {
     }
     //getting bonded devices list
     public void getListDevices(View v){
-        pairedDevices = mBluetoothAdapter.getBondedDevices();
+        Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
 
         for(BluetoothDevice device : pairedDevices)
             BTArrayAdapter.add(device.getName()+ "\n" + device.getAddress());

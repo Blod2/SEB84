@@ -7,6 +7,7 @@
     <string name="title_activity_training">Let\'s train</string>
     <string name="title_activity_battle">To battle!</string>
     <string name="title_activity_btconnect">Select device</string>
+    <string name="title_activity_armory">Armory</string>
 
 
     <!-- Preferences -->
@@ -23,6 +24,9 @@
     <string name="preference_exit_time" translatable="false">exitTime</string>
     <string name="preference_hero_train_time" translatable="false">timeTrain</string>
     <string name="preference_hero_train_mode" translatable="false">trainMode</string>
+    <string name="preference_hero_avatar" translatable="false">heroAvatar</string>
+    <string name="preference_hp_potions" translatable="false">hpPotions</string>
+
 
     <!-- StartScreen -->
     <string name="tvLogo_text" translatable="false">SEB-84</string>
@@ -57,9 +61,11 @@
     <string name="training">Training</string>
     <string name="toBattle">To Battle</string>
     <string name="lvlUp">Level UP</string>
+    <string name="armory">To Armory</string>
     <string name="toast_win">You WIN!!!</string>
     <string name="toast_loose">You LOOSE!!!</string>
     <string name="toast_discon">Opponent has been disconnected.</string>
+    <string name="toast_hppotion_found">You\'ve found HP potion!</string>
 
     <!-- Training -->
     <string name="train">Choose the type of training:</string>
@@ -83,5 +89,12 @@
     <string name="foot">Foot</string>
     <string name="onAttack">Attack!</string>
     <string name="load">Waiting for opponent\'s turn</string>
+
+
+    <!-- ArmoryActivity -->
+    <string name="btnSave">Save</string>
+    <string name="hero_avatar_description">Your hero avatar</string>
+    <string name="change_avatar">Change avatar</string>
+
 
 </resources>

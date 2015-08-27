@@ -33,7 +33,6 @@ public class BattleActivity extends Activity {
     final String BATTLE_LOG = "Battle";
     private BattleManager mBattleManager = null;
     private StringBuffer mOutStringBuffer;
-    private BluetoothAdapter mBluetoothAdapter = null;
 
     Hero hero;
     SharedPreferences sharedPref;
@@ -270,12 +269,6 @@ public class BattleActivity extends Activity {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
-                case Constants.MESSAGE_WRITE:
-                    byte[] writeBuf = (byte[]) msg.obj;
-                    // construct a string from the buffer
-                    String writeMessage = new String(writeBuf);
-                   // editText.setText(writeMessage);
-                    break;
                 case Constants.MESSAGE_READ:
                     byte[] readBuf = (byte[]) msg.obj;
                     // construct a string from the valid bytes in the buffer
@@ -300,9 +293,14 @@ public class BattleActivity extends Activity {
 
     private void connectDevice(Intent data) {
         // Get the device MAC address
-        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         String address = data.getExtras().getString("device_address");
-        if (address.equals(null)) return;
+        try {
+            if (address.equals(null)) return;
+        }
+        catch (NullPointerException e){
+            return;
+        }
         Log.d(BATTLE_LOG,"Connecting to device:"+address);
         // Get the BluetoothDevice object
         BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
@@ -317,7 +315,6 @@ public class BattleActivity extends Activity {
 
     boolean firstMes = true;
     private void parseMessage(String mess){
-        //TODO: parsing messages
         Pattern xx = Pattern.compile("[AFDE]:([^*$]*)");
         Matcher m = xx.matcher(mess);
         if (m.matches()){

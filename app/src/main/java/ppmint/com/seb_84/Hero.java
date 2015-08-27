@@ -2,7 +2,6 @@ package ppmint.com.seb_84;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import static java.lang.System.currentTimeMillis;
 
@@ -28,6 +27,8 @@ public class Hero {
     public long time;
     public int timeTrain;
     public int mode;
+    public int avatar;
+    public int hpPotions;
 
     SharedPreferences sharedPref;
     Context context;
@@ -36,6 +37,7 @@ public class Hero {
         sharedPref = sp;
         context = ccc;
         name = sharedPref.getString(context.getString(R.string.preference_hero_name_key), hname);
+        avatar = sharedPref.getInt(context.getString(R.string.preference_hero_avatar), R.drawable.def);
         lvl = sharedPref.getInt(context.getString(R.string.preference_hero_lvl_key), 1);
         hp = sharedPref.getInt(context.getString(R.string.preference_hero_HP_key), 10);
         exp = sharedPref.getInt(context.getString(R.string.preference_hero_Exp_key), 0);
@@ -45,6 +47,7 @@ public class Hero {
         endurance = sharedPref.getInt(context.getString(R.string.preference_hero_End_key),1);
         statPoints = sharedPref.getInt(context.getString(R.string.preference_hero_stPt_key),3);
         timeTrain = sharedPref.getInt(context.getString(R.string.preference_hero_train_time),0);
+        hpPotions = sharedPref.getInt(context.getString(R.string.preference_hp_potions),0);
         time = currentTimeMillis() - sharedPref.getLong(context.getString(R.string.preference_exit_time),currentTimeMillis());
         mode = sharedPref.getInt(context.getString(R.string.preference_hero_train_mode),0);
         refreshHero();
@@ -53,6 +56,7 @@ public class Hero {
     public void saveHero(){
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(context.getString(R.string.preference_hero_name_key),name);
+        editor.putInt(context.getString(R.string.preference_hero_avatar), avatar);
         editor.putInt(context.getString(R.string.preference_hero_lvl_key), lvl);
         editor.putInt(context.getString(R.string.preference_hero_str_key), strength);
         editor.putInt(context.getString(R.string.preference_hero_Agl_key), agility);
@@ -64,7 +68,8 @@ public class Hero {
         editor.putLong(context.getString(R.string.preference_exit_time), currentTimeMillis());
         editor.putInt(context.getString(R.string.preference_hero_train_time), timeTrain);
         editor.putInt(context.getString(R.string.preference_hero_train_mode), mode);
-        editor.commit();
+        editor.putInt(context.getString(R.string.preference_hp_potions), hpPotions);
+        editor.apply();
     }
 
     public void refreshHero(){

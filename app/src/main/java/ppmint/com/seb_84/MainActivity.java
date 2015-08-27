@@ -12,13 +12,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import static java.lang.System.currentTimeMillis;
 
 
 public class MainActivity extends Activity {
@@ -48,6 +52,7 @@ public class MainActivity extends Activity {
     Timer regenTimer;
     Handler mHandler;
     Timer trnTimer;
+    ImageView ivAvatar;
 
 
 
@@ -73,6 +78,7 @@ public class MainActivity extends Activity {
         btnBtl = (Button) findViewById(R.id.btnBtl);
         pbTrain = (ProgressBar) findViewById(R.id.pbTrn);
         tvTrn = (TextView) findViewById(R.id.tvTrn);
+        ivAvatar = (ImageView) findViewById(R.id.ivAvatar);
 
 
         sharedPref = getSharedPreferences(getString(R.string.preference_file_key_name), Context.MODE_PRIVATE);
@@ -97,8 +103,13 @@ public class MainActivity extends Activity {
         btnBtl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent in = new Intent(getApplicationContext(), BTConnect.class);
-                startActivityForResult(in, 2);
+                if (pbHP.getProgress() > hero.maxHP/2){
+                    Intent in = new Intent(getApplicationContext(), BTConnect.class);
+                    startActivityForResult(in, 2);
+                }
+                else {
+                    Toast.makeText(getApplicationContext(),"You HP < 50%. Іди броди...",Toast.LENGTH_LONG).show();
+                }
             }
         });
         mHandler = new Handler(){
@@ -145,6 +156,7 @@ public class MainActivity extends Activity {
             if (hero.timeTrain < (time / 60000)) {
                 hero.timeTrain = 0;
                 mHandler.sendEmptyMessage(hero.mode);
+                addHPpotion();
             }
             if (hero.timeTrain > (time / 60000)) {
                 hero.timeTrain -= time / 60000;
@@ -183,10 +195,13 @@ public class MainActivity extends Activity {
             intent.putExtra("points", hero.statPoints);
             startActivityForResult(intent, 1);
         }
+        if (id == R.id.armory) {
+            //TODO: start armory activity
+            startActivityForResult(new Intent(getApplicationContext(),ArmoryActivity.class),5);
+        }
 
         return super.onOptionsItemSelected(item);
     }
-
 
     @Override
     protected void onResume() {
@@ -233,28 +248,45 @@ public class MainActivity extends Activity {
         }
         if (requestCode==2){
             String device = data.getStringExtra("device_address");
-            //TODO: battle activity and bluetoothManager
             Intent btlint = new Intent(getApplicationContext(),BattleActivity.class);
             btlint.putExtra("device_address",device);
-            if (device.equals(null)) return;
+            if (device.equals("")) return;
             startActivityForResult(btlint,3);
             Toast.makeText(getApplicationContext(),device,Toast.LENGTH_SHORT).show();
         }
         if (requestCode == 3){
             if (resultCode == 3){
             hero.hp = data.getIntExtra("myHP",10);
-
+            addHPpotion();
             if (hero.hp <= 0){ Toast.makeText(getApplicationContext(),getString(R.string.toast_loose),Toast.LENGTH_SHORT).show();
-                hero.exp+=hero.lvl*1;}
+                hero.exp+=hero.lvl;}
             else{ Toast.makeText(getApplicationContext(),getString(R.string.toast_win),Toast.LENGTH_SHORT).show();
             hero.exp+=hero.lvl*3;}}
             if (resultCode == 4) {
                 Toast.makeText(getApplicationContext(),getString(R.string.toast_discon),Toast.LENGTH_LONG).show();
             }
         }
+        if (requestCode == 5){
+            if (resultCode==RESULT_OK) {
+                hero.avatar = data.getIntExtra("resId", R.drawable.witch);
+                hero.hp = data.getIntExtra("heroHP",hero.hp);
+            }
+        }
         updateScreen();
     }
 
+    public void addHPpotion(){
+        int rollNum = roll();
+        if (rollNum>=0&&rollNum<=10){
+            hero.hpPotions++;
+            Toast.makeText(getApplicationContext(),getString(R.string.toast_hppotion_found),Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private int roll(){
+        Random rand = new Random(currentTimeMillis());
+        return rand.nextInt(100);
+    }
 
     public void updateScreen(){
         hero.refreshHero();
@@ -273,6 +305,7 @@ public class MainActivity extends Activity {
         pbExp.setMax(hero.maxExp);
         pbHP.setProgress(hero.hp);
         pbExp.setProgress(hero.exp);
+        ivAvatar.setImageResource(hero.avatar);
         lvlUp();
         if (hero.statPoints > 0) tvStPoints.setText("+" + String.valueOf(hero.statPoints));
         else tvStPoints.setText("");
@@ -281,7 +314,7 @@ public class MainActivity extends Activity {
     public void lvlUp(){
         if (hero.lvl == Constants.MAXIMAL_LEVEL){
             hero.lvl = Constants.MAXIMAL_LEVEL;
-            Toast.makeText(getApplicationContext(),"You have maximal level! You reached!",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"You have reached maximal level! You rulezz!",Toast.LENGTH_SHORT).show();
         }
         else
             if (hero.exp >= hero.maxExp){
@@ -323,6 +356,7 @@ public class MainActivity extends Activity {
                 if (trnTimer!=null){
                     trnTimer.purge();
                     trnTimer.cancel();
+                    addHPpotion();
                 }
             }
         }
@@ -340,6 +374,5 @@ public class MainActivity extends Activity {
             mHandler.sendEmptyMessage(0);
         }
     }
-
 
 }

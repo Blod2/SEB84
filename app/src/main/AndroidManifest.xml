@@ -50,6 +50,11 @@
             android:label="@string/title_activity_battle"
             android:screenOrientation="landscape" >
         </activity>
+        <activity
+            android:name=".ArmoryActivity"
+            android:label="@string/title_activity_armory"
+            android:screenOrientation="landscape">
+        </activity>
     </application>
 
 </manifest>

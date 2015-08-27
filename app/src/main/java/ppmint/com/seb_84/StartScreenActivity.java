@@ -43,7 +43,7 @@ public class StartScreenActivity extends Activity {
         btnSubm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (etHeroName.getText().toString().equals(null)) {
+                if (etHeroName.getText().toString().equals("")) {
                     Toast.makeText(getApplicationContext(),getString(R.string.toast_noname),Toast.LENGTH_SHORT).show();
                 }
                 else{
