@@ -66,6 +66,8 @@
     <string name="toast_loose">You LOOSE!!!</string>
     <string name="toast_discon">Opponent has been disconnected.</string>
     <string name="toast_hppotion_found">You\'ve found HP potion!</string>
+    <string name="botfight">Bot fight</string>
+
 
     <!-- Training -->
     <string name="train">Choose the type of training:</string>
@@ -96,5 +98,8 @@
     <string name="hero_avatar_description">Your hero avatar</string>
     <string name="change_avatar">Change avatar</string>
 
+    <!-- BattleVSBotActivity -->
+    <string name="skeleton">Training skeleton</string>
+    <string name="targetdef">Select target and defence!</string>
 
 </resources>

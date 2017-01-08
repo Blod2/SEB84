@@ -4,9 +4,9 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="ppmint.com.seb_84.BattleActivity"
+    tools:context="ppmint.com.seb_84.BattleVSBotActivity"
     android:background="#ff878787"
-    android:id="@+id/battle_activity">
+    android:id="@+id/battlevsbot_activity">
 
     <TextView
         android:layout_width="wrap_content"
@@ -201,7 +201,7 @@
             android:layout_height="0dp"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="@string/head"
-            android:id="@+id/textView19"
+            android:id="@+id/textView24"
             android:textColor="#ff000000"
             android:textStyle="bold"
             android:layout_marginTop="20dp"
@@ -213,7 +213,7 @@
             android:layout_height="0dp"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="@string/chest"
-            android:id="@+id/textView20"
+            android:id="@+id/textView25"
             android:textColor="#ff000000"
             android:textStyle="bold"
             android:layout_marginTop="25dp"
@@ -225,7 +225,7 @@
             android:layout_height="0dp"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="@string/lower_back"
-            android:id="@+id/textView21"
+            android:id="@+id/textView26"
             android:textColor="#ff000000"
             android:textStyle="bold"
             android:layout_marginTop="25dp"
@@ -237,7 +237,7 @@
             android:layout_height="0dp"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="@string/foot"
-            android:id="@+id/textView22"
+            android:id="@+id/textView27"
             android:textColor="#ff000000"
             android:textStyle="bold"
             android:layout_marginTop="25dp"

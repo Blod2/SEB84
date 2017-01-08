@@ -54,4 +54,9 @@
     <string name="toast_hppotion_found">Вы нашли зелье здоровья!</string>
     <string name="toast_loose">Вы проиграааали!!!</string>
     <string name="toast_win">Победа!!</string>
+    <string name="botfight">Битва с ботом</string>
+
+    <!-- BattleVSBotActivity -->
+    <string name="skeleton">Тренировочный скелет</string>
+    <string name="targetdef">Выбери цель и защиту!</string>
 </resources>

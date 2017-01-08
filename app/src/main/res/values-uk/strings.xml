@@ -54,4 +54,8 @@
     <string name="trainMain">Тренування...</string>
     <string name="training">Тренування</string>
     <string name="tvHero_name">Виберіть ім\'я нової легенди:</string>
+    <string name="botfight">Битва з ботом</string>
+    <!-- BattleVSBotActivity -->
+    <string name="skeleton">Тренувальний скелет</string>
+    <string name="targetdef">Вибери ціль та захист!</string>
 </resources>

@@ -198,7 +198,15 @@ public class MainActivity extends Activity {
             hero.saveHero();
             startActivityForResult(new Intent(getApplicationContext(), ArmoryActivity.class), 5);
         }
-
+        if (id==R.id.botfight) {
+            if (pbHP.getProgress() > hero.maxHP/2){
+                Intent in = new Intent(getApplicationContext(), BattleVSBotActivity.class);
+                startActivityForResult(in, 3);
+            }
+            else {
+                Toast.makeText(getApplicationContext(),"You HP < 50%. Іди броди...",Toast.LENGTH_LONG).show();
+            }
+        }
         return super.onOptionsItemSelected(item);
     }
 

@@ -5,4 +5,6 @@
         android:orderInCategory="100" />
     <item android:id="@+id/armory" android:title="@string/armory"
         android:orderInCategory="100" />
+    <item android:id="@+id/botfight" android:title="@string/botfight"
+        android:orderInCategory="100" />
 </menu>
