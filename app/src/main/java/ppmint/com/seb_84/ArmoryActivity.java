@@ -17,7 +17,7 @@ import android.widget.ProgressBar;
 public class ArmoryActivity extends Activity {
     Hero hero;
     SharedPreferences sharedPref;
-    Button btnSave,btnChangeAvatar;
+    Button btnSave;
     ImageView ivAvatar,ivHpPotion;
     ProgressBar pbHerohp;
     private Integer[] avIds = {R.drawable.thief,R.drawable.witch,R.drawable.def};
@@ -28,13 +28,12 @@ public class ArmoryActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_armory);
-        sharedPref = getSharedPreferences(getString(R.string.preference_file_key_name), Context.MODE_APPEND);
+        sharedPref = getSharedPreferences(getString(R.string.preference_file_key_name), Context.MODE_PRIVATE);
         hero = new Hero(sharedPref,"sasiska",getApplicationContext());
         btnSave = (Button)findViewById(R.id.btnSave);
         pbHerohp = (ProgressBar)findViewById(R.id.pbHerohp);
         pbHerohp.setMax(hero.maxHP);
         pbHerohp.setProgress(hero.hp);
-        btnChangeAvatar = (Button) findViewById(R.id.btnChangeAvatar);
         ivAvatar = (ImageView) findViewById(R.id.ivAvatar);
         ivHpPotion = (ImageView)findViewById(R.id.ivHpPotion);
         ivAvatar.setImageResource(hero.avatar);
@@ -59,6 +58,7 @@ public class ArmoryActivity extends Activity {
         Intent intent = new Intent();
         intent.putExtra("resId",hero.avatar);
         intent.putExtra("heroHP",hero.hp);
+        intent.putExtra("potionHP",hero.hpPotions);
         setResult(RESULT_OK,intent);
         finish();
     }
@@ -87,25 +87,21 @@ public class ArmoryActivity extends Activity {
 
         @Override
         public int getCount() {
-            // TODO Auto-generated method stub
             return mImage.length;
         }
 
         @Override
         public Object getItem(int position) {
-            // TODO Auto-generated method stub
             return mImage[position];
         }
 
         @Override
         public long getItemId(int position) {
-            // TODO Auto-generated method stub
             return mImage[position];
         }
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            // TODO Auto-generated method stub
             ImageView view = new ImageView(mContext);
             view.setImageResource(mImage[position]);
             view.setPadding(20, 20, 20, 20);

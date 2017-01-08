@@ -19,6 +19,7 @@ public class Hero {
     public int intellect;
     public int endurance;
     public int attack;
+    //ch - critical hit chance
     public int ch;
     public int accuracy;
     public int defence;

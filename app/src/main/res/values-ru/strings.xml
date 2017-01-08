@@ -45,4 +45,13 @@
     <string name="trainMain">Тренировка...</string>
     <string name="training">Тренировка</string>
     <string name="tvHero_name">Введите имя нового героя:</string>
+    <string name="armory">В оружейную</string>
+    <string name="btnSave">Сохранить</string>
+    <string name="change_avatar">Изменить аватар</string>
+    <string name="hero_avatar_description">Аватар вашего героя</string>
+    <string name="title_activity_armory">Оружейная</string>
+    <string name="toast_discon">Ваш оппонент отключился</string>
+    <string name="toast_hppotion_found">Вы нашли зелье здоровья!</string>
+    <string name="toast_loose">Вы проиграааали!!!</string>
+    <string name="toast_win">Победа!!</string>
 </resources>

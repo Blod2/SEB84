@@ -36,6 +36,7 @@ public class BattleActivity extends Activity {
 
     Hero hero;
     SharedPreferences sharedPref;
+    private int enemyAvatar;
     private int enemyAttack = 0;
     private int enemyDefence = 0;
     private int enemyCH = 0;
@@ -85,12 +86,14 @@ public class BattleActivity extends Activity {
         rbDLowerBack = (RadioButton) findViewById(R.id.rbDLow);
         rbDFoot = (RadioButton) findViewById(R.id.rbDFoot);
         btnToAttack = (Button) findViewById(R.id.btnToAttack);
+        btnToAttack.setVisibility(View.INVISIBLE);
 
         sharedPref = getSharedPreferences(getString(R.string.preference_file_key_name), Context.MODE_PRIVATE);
         hero = new Hero(sharedPref,"unnamed",this);
         tvMyHero.setText(hero.name);
         pbMyHero.setMax(hero.maxHP);
         pbMyHero.setProgress(hero.hp);
+        ivMyHero.setImageResource(hero.avatar);
         intent = getIntent();
         disconnectFlag = true;
 
@@ -187,6 +190,7 @@ public class BattleActivity extends Activity {
                     pbEnemyHero.setProgress(pbEnemyHero.getProgress()-myDamage);
                     sendMsg(defencePackage(pbEnemyHero.getProgress(), hero.hp));
                     battleFlag = true;
+                    btnToAttack.setVisibility(View.INVISIBLE);
                     endBattle();
                 }
             }
@@ -281,6 +285,7 @@ public class BattleActivity extends Activity {
                     if (!deviceadr.equals("server")){
                         sendMsg(constructFirstMessage());
                     }
+                    else btnToAttack.setVisibility(View.VISIBLE);
                     break;
                 case Constants.MESSAGE_TOAST:
                         Toast.makeText(getApplicationContext(), msg.getData().getString(Constants.TOAST),
@@ -310,7 +315,7 @@ public class BattleActivity extends Activity {
 
     private String constructFirstMessage(){
         return "F:"+hero.name+":"+hero.maxHP+":"+hero.hp+":"+hero.attack+":"+hero.defence+
-                ":"+hero.ch+":"+hero.accuracy+":"+hero.dodge;
+                ":"+hero.ch+":"+hero.accuracy+":"+hero.dodge+":"+hero.avatar;
     }
 
     boolean firstMes = true;
@@ -330,6 +335,8 @@ public class BattleActivity extends Activity {
                 enemyCH = Integer.valueOf(splitter.next());
                 enemyAC = Integer.valueOf(splitter.next());
                 enemyDD = Integer.valueOf(splitter.next());
+                enemyAvatar = Integer.valueOf(splitter.next());
+                ivEnemyHero.setImageResource(enemyAvatar);
                 Log.d(BATTLE_LOG,String.valueOf(enemyDefence));
                 if (firstMes){
                     String message = constructFirstMessage();
@@ -341,6 +348,7 @@ public class BattleActivity extends Activity {
             if (head.equals("A")){
                 enemyTarget = Integer.valueOf(splitter.next());
                 enemyBlock = Integer.valueOf(splitter.next());
+                btnToAttack.setVisibility(View.VISIBLE);
                 battleFlag = false;
                 Log.d(BATTLE_LOG, "attack: " + enemyTarget + " " + enemyBlock);
             }

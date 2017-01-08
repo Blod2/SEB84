@@ -55,7 +55,6 @@ public class MainActivity extends Activity {
     ImageView ivAvatar;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -196,8 +195,8 @@ public class MainActivity extends Activity {
             startActivityForResult(intent, 1);
         }
         if (id == R.id.armory) {
-            //TODO: start armory activity
-            startActivityForResult(new Intent(getApplicationContext(),ArmoryActivity.class),5);
+            hero.saveHero();
+            startActivityForResult(new Intent(getApplicationContext(), ArmoryActivity.class), 5);
         }
 
         return super.onOptionsItemSelected(item);
@@ -207,7 +206,7 @@ public class MainActivity extends Activity {
     protected void onResume() {
         if (regenTimer!=null) regenTimer.cancel();
         regenTimer = new Timer(true);
-        regenTimer.schedule(new RegenTask(), 600, 600);
+        regenTimer.schedule(new RegenTask(), 60000, 60000);
         super.onResume();
     }
 
@@ -270,22 +269,23 @@ public class MainActivity extends Activity {
             if (resultCode==RESULT_OK) {
                 hero.avatar = data.getIntExtra("resId", R.drawable.witch);
                 hero.hp = data.getIntExtra("heroHP",hero.hp);
+                hero.hpPotions = data.getIntExtra("potionHP",0);
             }
         }
         updateScreen();
     }
 
     public void addHPpotion(){
-        int rollNum = roll();
+        int rollNum = roll(100);
         if (rollNum>=0&&rollNum<=10){
             hero.hpPotions++;
             Toast.makeText(getApplicationContext(),getString(R.string.toast_hppotion_found),Toast.LENGTH_SHORT).show();
         }
     }
 
-    private int roll(){
+    private int roll(int diapason){
         Random rand = new Random(currentTimeMillis());
-        return rand.nextInt(100);
+        return rand.nextInt(diapason);
     }
 
     public void updateScreen(){
